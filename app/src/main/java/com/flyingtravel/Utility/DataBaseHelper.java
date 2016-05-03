@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DataBaseHelper extends SQLiteOpenHelper {
     private static DataBaseHelper mInstance = null;
-    private static final int VERSION = 2;
+    private static final int VERSION = 3;
     // version 2: news 新增一個column //TODO 尚未測試!
     private static final String DATABASE_NAME = "Travel.db";
     private Context mcontext;

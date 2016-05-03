@@ -68,7 +68,7 @@
     <string name="recordremind_text">請先開始記錄，才可上傳景點心得</string>
     <string name="serviceLine_text">客服專線</string>
     <string name="serviceLineTitle_text">飛行家服務專線</string>
-    <string name="serviceTime_text">服務時間：10–21</string>
+    <string name="serviceTime_text">服務時間：</string>
     <string name="message_text">線上訊息</string>
     <string name="send_text">送    出</string>
     <string name="buyfrom_text">購買於</string>

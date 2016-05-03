@@ -8,10 +8,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.flyingtravel.HomepageActivity;
@@ -42,7 +44,7 @@ public class ServiceActivity extends AppCompatActivity {
     EditText commentEdt;
     LinearLayout sendLayout;
     String name, email, phone;
-
+    TextView companyText,phoneText,timeText,lineIdText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +52,14 @@ public class ServiceActivity extends AppCompatActivity {
         backImg = (LinearLayout) findViewById(R.id.service_backImg);
         commentEdt = (EditText) findViewById(R.id.service_edit);
         sendLayout = (LinearLayout) findViewById(R.id.service_send_layout);
+        companyText = (TextView)findViewById(R.id.service_companyText);
+        phoneText = (TextView)findViewById(R.id.service_phoneText);
+        timeText = (TextView)findViewById(R.id.service_timeText);
+        lineIdText = (TextView)findViewById(R.id.service_lineText);
+
+
+        new getData().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
         DataBaseHelper helper = DataBaseHelper.getmInstance(ServiceActivity.this);
         SQLiteDatabase database = helper.getWritableDatabase();
         Cursor member_cursor = database.query("member", new String[]{"account", "password",
@@ -122,6 +132,95 @@ public class ServiceActivity extends AppCompatActivity {
         return false;
     }
 
+    class getData extends AsyncTask<String,Void,Boolean>{
+        ProgressDialog dialog = new ProgressDialog(ServiceActivity.this);
+        String company=null,phone=null,time=null,lineId=null;
+        @Override
+        protected void onPreExecute() {
+            dialog.setMessage(ServiceActivity.this.getResources().getString(R.string.loading_text));
+            dialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            HttpClient client = new DefaultHttpClient();
+            //http://zhiyou.lin366.com/api/feedback/index.aspx
+            //http://zhiyou.lin366.com/api/feedback/content.aspx
+            HttpPost post = new HttpPost("http://zhiyou.lin366.com/api/feedback/content.aspx");
+            MultipartEntity entity = new MultipartEntity();
+            Charset chars = Charset.forName("UTF-8");
+            try {
+                entity.addPart("json", new StringBody("{\"act\":\"content\"}", chars));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            post.setEntity(entity);
+            HttpResponse resp = null;
+            String result = null;
+            try {
+                resp = client.execute(post);
+                result = EntityUtils.toString(resp.getEntity());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String message = null;
+            try {
+                message = new JSONObject(result.substring(
+                        result.indexOf("{"), result.lastIndexOf("}") + 1)).getString("states");
+            } catch (JSONException | NullPointerException e2) {
+                e2.printStackTrace();
+            }
+            if(message==null||!message.equals("1"))
+                return false;
+            else {
+                try {
+                    company = new JSONObject(result.substring(
+                            result.indexOf("{"), result.lastIndexOf("}") + 1)).getString("company");
+                } catch (JSONException | NullPointerException e2) {
+                    e2.printStackTrace();
+                }
+
+                try {
+                    phone = new JSONObject(result.substring(
+                            result.indexOf("{"), result.lastIndexOf("}") + 1)).getString("tel");
+                } catch (JSONException | NullPointerException e2) {
+                    e2.printStackTrace();
+                }
+                try {
+                    time = new JSONObject(result.substring(
+                            result.indexOf("{"), result.lastIndexOf("}") + 1)).getString("time");
+                } catch (JSONException | NullPointerException e2) {
+                    e2.printStackTrace();
+                }
+                try {
+                    lineId = new JSONObject(result.substring(
+                            result.indexOf("{"), result.lastIndexOf("}") + 1)).getString("line");
+                } catch (JSONException | NullPointerException e2) {
+                    e2.printStackTrace();
+                }
+                return true;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean s) {
+            if(dialog.isShowing())
+                dialog.dismiss();
+            if(s){
+            companyText.setText(company);
+                Log.e("5.3", "company" + company + "phone:" + phone + "time: " + time + "lineID: " + lineId);
+                phoneText.setText(phone);
+
+                lineIdText.setText("LINE ID：" + time);
+//                timeText.append(time);
+                timeText.setText(ServiceActivity.this.getResources().getString(R.string.serviceTime_text)+time);
+            }else Toast.makeText(ServiceActivity.this,ServiceActivity.this.getResources().getString(R.string.wrongData_text),Toast.LENGTH_SHORT).show();
+            super.onPostExecute(s);
+        }
+    }
+
     class sendMessage extends AsyncTask<String, Void, String> {
         String m_messgae;
         ProgressDialog mDialog;
@@ -147,6 +246,7 @@ public class ServiceActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 //            Log.e("3.9", "Service do in background");
             HttpClient client = new DefaultHttpClient();
+            //http://zhiyou.lin366.com/api/feedback/index.aspx
             HttpPost post = new HttpPost("http://zhiyou.lin366.com/api/feedback/index.aspx");
             MultipartEntity entity = new MultipartEntity();
             Charset chars = Charset.forName("UTF-8");

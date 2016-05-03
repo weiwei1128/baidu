@@ -49,9 +49,9 @@
                 android:layout_marginBottom="3dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
-                android:text="@string/serviceLineTitle_text"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:id="@+id/service_companyText" />
 
             <View
                 android:layout_width="match_parent"
@@ -67,9 +67,9 @@
                 android:layout_marginBottom="3dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp"
-                android:text="(02)2562-3919"
                 android:textColor="@color/black"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:id="@+id/service_phoneText" />
 
             <View
                 android:layout_width="match_parent"
@@ -87,7 +87,8 @@
                 android:layout_marginTop="15dp"
                 android:text="@string/serviceTime_text"
                 android:textColor="@color/black"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:id="@+id/service_timeText" />
 
             <View
                 android:layout_width="match_parent"
@@ -103,9 +104,10 @@
                 android:layout_marginBottom="3dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp"
-                android:text="LINE ID：@gno6401o"
+                android:text="LINE ID："
                 android:textColor="@color/black"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:id="@+id/service_lineText" />
 
             <View
                 android:layout_width="match_parent"

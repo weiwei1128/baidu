@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.baidu.mapapi.BMapManager;
 import com.flyingtravel.Utility.DataBaseHelper;
 import com.flyingtravel.Utility.GetSpotsNSort;
 import com.flyingtravel.Utility.GlobalVariable;
