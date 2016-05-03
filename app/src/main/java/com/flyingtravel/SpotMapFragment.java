@@ -2,49 +2,34 @@ package com.flyingtravel;
 
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.Resources;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.flyingtravel.Utility.DataBaseHelper;
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.MapStatus;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
+import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.model.LatLng;
 import com.flyingtravel.Utility.GetSpotsNSort;
 import com.flyingtravel.Utility.GlobalVariable;
-import com.flyingtravel.Utility.LoadApiService;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.ArrayList;
-
-public class SpotMapFragment extends Fragment implements
-        com.google.android.gms.location.LocationListener,
-        GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+public class SpotMapFragment extends Fragment {
 
     public static final String TAG = SpotMapFragment.class.getSimpleName();
     private static final String FRAGMENT_NAME = "FRAGMENT_NAME";
@@ -53,22 +38,18 @@ public class SpotMapFragment extends Fragment implements
     //private String mParam2;
 
     private MapView mapView;
-    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    private GoogleApiClient mGoogleApiClient;
-    private LocationRequest mLocationRequest;
-    // Location updates intervals in sec
-    private static int UPDATE_INTERVAL = 5000; // 5 sec
-    private static int FATEST_INTERVAL = 1000; // 1 sec
-    private static int DISPLACEMENT = 3;       // 5 meters
-
-    private GlobalVariable globalVariable;
-
-    private ProgressDialog mProgressDialog;
+    private BaiduMap mBaiduMap;
+    private LocationClient mLocationClient = null;
+    private BDLocationListener myListener = new MyLocationListener();
 
     private Location CurrentLocation;
-    private Marker CurrentMarker;
+    private BitmapDescriptor CurrentMarker;
+    boolean isFirstLoc = true; // 是否首次定位
 
     private Bitmap MarkerIcon;
+
+    private GlobalVariable globalVariable;
+    private ProgressDialog mProgressDialog;
 
     public SpotMapFragment() {
         // Required empty public constructor
@@ -92,21 +73,16 @@ public class SpotMapFragment extends Fragment implements
         }
 
         globalVariable = (GlobalVariable) getActivity().getApplicationContext();
-        getActivity().registerReceiver(broadcastReceiver, new IntentFilter(LoadApiService.BROADCAST_ACTION));
-        getActivity().registerReceiver(broadcastReceiver_SpotSort, new IntentFilter(GetSpotsNSort.BROADCAST_ACTION));
+        //getActivity().registerReceiver(broadcastReceiver, new IntentFilter(LoadApiService.BROADCAST_ACTION));
+        //getActivity().registerReceiver(broadcastReceiver_SpotSort, new IntentFilter(GetSpotsNSort.BROADCAST_ACTION));
 
         mProgressDialog = new ProgressDialog(getActivity());
         MarkerIcon = decodeBitmapFromResource(getResources(), R.drawable.location3, 10, 18);
 
-        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API).build();
-        mLocationRequest = LocationRequest.create()
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(UPDATE_INTERVAL)        // 5 seconds, in milliseconds
-                .setFastestInterval(FATEST_INTERVAL) // 1 second, in milliseconds
-                .setSmallestDisplacement(DISPLACEMENT);
+        mLocationClient = new LocationClient(getActivity());  //声明LocationClient类
+        mLocationClient.registerLocationListener(myListener); //注册监听函数
+        initLocation();
+        mLocationClient.start();
     }
 
     @Override
@@ -115,21 +91,16 @@ public class SpotMapFragment extends Fragment implements
         View rootView = inflater.inflate(R.layout.fragment_spot_map, container, false);
 
         mapView = (MapView) rootView.findViewById(R.id.SpotMap);
-        mapView.onCreate(savedInstanceState);
-        mapView.onResume();         // needed to get the map to display immediately
-
-        // Gets to GoogleMap from the MapView and does initialization stuff
-        mMap = mapView.getMap();
-        if (mMap != null) {
-            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-            mMap.setMyLocationEnabled(true);
-            mMap.getUiSettings().setCompassEnabled(true);
-            mMap.getUiSettings().setAllGesturesEnabled(true);
-            mMap.getUiSettings().setMapToolbarEnabled(false);
+        mBaiduMap = mapView.getMap();
+        if (mBaiduMap != null) {
+            mBaiduMap.setMyLocationEnabled(true);
+//            mBaiduMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+//            mBaiduMap.getUiSettings().setCompassEnabled(true);
+//            mBaiduMap.getUiSettings().setAllGesturesEnabled(true);
         }
 
         // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
-        MapsInitializer.initialize(this.getActivity());
+        //MapsInitializer.initialize(this.getActivity());
 
         return rootView;
     }
@@ -137,7 +108,7 @@ public class SpotMapFragment extends Fragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+/*
         if (!globalVariable.isAPILoaded) {
 //            Log.e("3/23_", "API is not ready");
             mProgressDialog.setMessage(getContext().getResources().getString(R.string.spotLoading_text));
@@ -157,58 +128,53 @@ public class SpotMapFragment extends Fragment implements
                 // Get Marker Info
                 //new GetMarkerInfo(getActivity()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
-        }
+        }*/
     }
 
     @Override
     public void onResume() {
         mapView.onResume();
-        if (!mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.connect();
-        }
-        if (MarkerIcon.isRecycled()) {
+/*        if (MarkerIcon.isRecycled()) {
             MarkerIcon = decodeBitmapFromResource(getResources(), R.drawable.location3, 10, 18);
             if (!globalVariable.MarkerOptionsArray.isEmpty()) {
                 int MarkerCount = globalVariable.MarkerOptionsArray.size();
                 for (int i = 0; i < MarkerCount/12; i++) {
-                    mMap.addMarker(globalVariable.MarkerOptionsArray.get(i)
-                            .icon(BitmapDescriptorFactory.fromBitmap(MarkerIcon)));
+//                    mMap.addMarker(globalVariable.MarkerOptionsArray.get(i)
+//                            .icon(BitmapDescriptorFactory.fromBitmap(MarkerIcon)));
                 }
             }
         } else {
             if (!globalVariable.MarkerOptionsArray.isEmpty()) {
                 int MarkerCount = globalVariable.MarkerOptionsArray.size();
                 for (int i = 0; i < MarkerCount/12; i++) {
-                    mMap.addMarker(globalVariable.MarkerOptionsArray.get(i)
-                            .icon(BitmapDescriptorFactory.fromBitmap(MarkerIcon)));
+//                    mMap.addMarker(globalVariable.MarkerOptionsArray.get(i)
+//                            .icon(BitmapDescriptorFactory.fromBitmap(MarkerIcon)));
                 }
             }
-        }
+        }*/
         super.onResume();
     }
 
     @Override
     public void onPause() {
         mapView.onPause();
-        if (mGoogleApiClient.isConnected()) {
-            LocationServices.FusedLocationApi.removeLocationUpdates (mGoogleApiClient, this);
-        }
         super.onPause();
     }
 
     @Override
     public void onStop() {
-        // 移除Google API用戶端連線
-        if (mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
-        }
         super.onStop();
     }
 
     @Override
     public void onDestroyView() {
 //        Log.e("3/23_SpotMap", "onDestroyView");
+        // 退出时销毁定位
+        mLocationClient.stop();
+        // 关闭定位图层
+        mBaiduMap.setMyLocationEnabled(false);
         mapView.onDestroy();
+        mapView = null;
         if (broadcastReceiver != null)
             getActivity().unregisterReceiver(broadcastReceiver);
         if (broadcastReceiver_SpotSort != null)
@@ -226,7 +192,6 @@ public class SpotMapFragment extends Fragment implements
     @Override
     public void onLowMemory() {
 //        Log.e("3/23_SpotMap", "onLowMemory");
-        mapView.onLowMemory();
         MarkerIcon.recycle();
         System.gc();
         super.onLowMemory();
@@ -238,7 +203,7 @@ public class SpotMapFragment extends Fragment implements
         if (isVisibleToUser) {
             //you are visible to user now - so set whatever you need
             //Log.e("3/23_SpotMap", "setUserVisibleHint: Visible");
-            if (MarkerIcon.isRecycled()) {
+/*            if (MarkerIcon.isRecycled()) {
                 MarkerIcon = decodeBitmapFromResource(getResources(), R.drawable.location3, 10, 18);
                 if (!globalVariable.MarkerOptionsArray.isEmpty()) {
                     int MarkerCount = globalVariable.MarkerOptionsArray.size();
@@ -247,99 +212,56 @@ public class SpotMapFragment extends Fragment implements
                                 .icon(BitmapDescriptorFactory.fromBitmap(MarkerIcon)));
                     }
                 }
-            }
+            }*/
         }
         else {
             //you are no longer visible to the user so cleanup whatever you need
             //Log.e("3/23_SpotMap", "setUserVisibleHint: not Visible");
-            if (MarkerIcon != null) {
+            /*if (MarkerIcon != null) {
                 MarkerIcon.recycle();
-            }
+            }*/
             System.gc();
         }
     }
 
-    @Override
-    public void onConnected(Bundle bundle) {
-        // 已經連線到Google Services
-        // 啟動位置更新服務
-        // 位置資訊更新的時候，應用程式會自動呼叫LocationListener.onLocationChanged
-//        Log.i(TAG, "Location services connected.");
+    private void initLocation(){
+        LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
+        option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
+        int span=1000;
+        option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
+        option.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
+        option.setOpenGps(true);//可选，默认false,设置是否使用gps
+        option.setLocationNotify(true);//可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
+        //option.setIsNeedLocationDescribe(true);//可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
+        //option.setIsNeedLocationPoiList(true);//可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
+        //option.setIgnoreKillProcess(false);//可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
+        option.SetIgnoreCacheException(false);//可选，默认false，设置是否收集CRASH信息，默认收集
+        option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤gps仿真结果，默认需要
+        mLocationClient.setLocOption(option);
+    }
 
-        Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (location == null) {
-            LocationServices.FusedLocationApi.requestLocationUpdates
-                    (mGoogleApiClient, mLocationRequest, (LocationListener) this);
-        } else {
-            HandleNewLocation(location);
-            if (globalVariable.isAPILoaded && globalVariable.SpotDataSorted.isEmpty()) {
-//                Log.e("3/23_Connected", "事先Sort");
-                new GetSpotsNSort(getActivity(), CurrentLocation.getLatitude(),
-                        CurrentLocation.getLongitude()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    public class MyLocationListener implements BDLocationListener {
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            if (location == null || mapView == null) {
+                return;
             }
-        }
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        Log.i(TAG, "Location services suspended. Please reconnect.");
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        // Google Services連線失敗
-        // ConnectionResult參數是連線失敗的資訊
-        int errorCode = connectionResult.getErrorCode();
-        // 裝置沒有安裝Google Play服務
-        if (errorCode == ConnectionResult.SERVICE_MISSING) {
-            Toast.makeText(getActivity(), R.string.google_play_service_missing, Toast.LENGTH_LONG).show();
-        }
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        if (CurrentLocation != location) {
-            HandleNewLocation(CurrentLocation);
-        }
-    }
-
-    private void HandleNewLocation(Location location) {
-        Log.d(TAG, location.toString());
-
-        CurrentLocation = location;
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-
-        // 設定目前位置的標記
-        if (CurrentMarker == null) {
-            CurrentMarker = mMap.addMarker(new MarkerOptions().position(latLng).title("I am here!")
-                    .icon(BitmapDescriptorFactory.fromBitmap(MarkerIcon)));
-        } else {
-            CurrentMarker.setPosition(latLng);
-        }
-
-        // 移動地圖到目前的位置
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
-
-        DataBaseHelper helper = DataBaseHelper.getmInstance(getActivity());
-        SQLiteDatabase database = helper.getWritableDatabase();
-        Cursor location_cursor = database.query("location",
-                new String[]{"CurrentLat", "CurrentLng"}, null, null, null, null, null);
-        if (location_cursor != null) {
-            if (location_cursor.getCount() == 0) {
-                ContentValues cv = new ContentValues();
-                cv.put("CurrentLat", location.getLatitude());
-                cv.put("CurrentLng", location.getLongitude());
-                long result = database.insert("location", null, cv);
-                //Log.d("3/10_新增位置", result + " = DB INSERT " + location.getLatitude() + " " + location.getLongitude());
-
-            } else {
-                ContentValues cv = new ContentValues();
-                cv.put("CurrentLat", location.getLatitude());
-                cv.put("CurrentLng", location.getLongitude());
-                long result = database.update("location", cv, "_ID=1", null);
-                //Log.d("3/10_位置更新", result + " = DB INSERT " + location.getLatitude() + " " + location.getLongitude());
+            MyLocationData locData = new MyLocationData.Builder()
+                    .accuracy(location.getRadius())
+                            // 此处设置开发者获取到的方向信息，顺时针0-360
+                    .direction(100).latitude(location.getLatitude())
+                    .longitude(location.getLongitude()).build();
+            mBaiduMap.setMyLocationData(locData);
+            if (isFirstLoc) {
+                isFirstLoc = false;
+                LatLng ll = new LatLng(location.getLatitude(),
+                        location.getLongitude());
+                MapStatus.Builder builder = new MapStatus.Builder();
+                builder.target(ll).zoom(18.0f);
+                mBaiduMap.animateMapStatus(MapStatusUpdateFactory
+                        .newMapStatus(builder.build()));
             }
-            location_cursor.close();
         }
     }
 
@@ -380,7 +302,7 @@ public class SpotMapFragment extends Fragment implements
                 Boolean isSpotSorted = intent.getBooleanExtra("isSpoted", false);
                 if (isSpotSorted) {
                     //Log.e("3/23_景點排序完畢", "Receive Broadcast");
-                    new GetMarkerInfo(getActivity()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//                    new GetMarkerInfo(getActivity()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             }
         }
@@ -421,7 +343,7 @@ public class SpotMapFragment extends Fragment implements
         }
         return inSampleSize;
     }
-
+/*
     public class GetMarkerInfo extends AsyncTask<Void, Void, ArrayList<MarkerOptions>> {
         public static final String TAG = "GetMarkerInfo";
         Context mcontext;
@@ -484,16 +406,16 @@ public class SpotMapFragment extends Fragment implements
             }
             int MarkerCount = globalVariable.MarkerOptionsArray.size();
             for (int i = 0; i < MarkerCount/12; i++) {
-                mMap.addMarker(globalVariable.MarkerOptionsArray.get(i)
+                mBaiduMap.addMarker(globalVariable.MarkerOptionsArray.get(i)
                         .icon(BitmapDescriptorFactory.fromBitmap(MarkerIcon)));
             }
             //Log.d("3/23_MarkerCount", MarkerCount+" MarkerCount/12: "+MarkerCount/12);
             mProgressDialog.dismiss();
-            /*
+
             for (MarkerOptions markerOptions : globalVariable.MarkerOptionsArray) {
                 mMap.addMarker(markerOptions);
-            }*/
+            }
             super.onPostExecute(markerOptionsArray);
         }
-    }
+    }*/
 }

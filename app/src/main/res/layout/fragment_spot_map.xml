@@ -4,9 +4,10 @@
     android:layout_height="match_parent"
     tools:context="com.flyingtravel.MapFragment">
 
-    <com.google.android.gms.maps.MapView
+    <com.baidu.mapapi.map.MapView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/SpotMap" />
+        android:id="@+id/SpotMap"
+        android:clickable="true" />
 
 </FrameLayout>
