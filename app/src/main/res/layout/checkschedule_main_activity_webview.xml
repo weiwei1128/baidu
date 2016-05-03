@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/shoprecord_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#5599FF"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/checkschedulelist_backImg"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/click_effect_general"
+                android:src="@drawable/arrow_back_white" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/shoprecord_Layout"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/checkschedulelistHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_weight="1"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/checkschedule_text"
+        android:textColor="@color/white"
+        android:textSize="22dp" />
+
+
+</RelativeLayout>

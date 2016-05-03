@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <SearchView
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:id="@+id/searchView" />
+<!--
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spotList_searchLayout"
+        android:background="#e1e1e1">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/spotlist_searchEditText"
+            android:layout_margin="6dp"
+            android:background="#ffffff" />
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="20dp"
+            android:id="@+id/spotlist_searchImg"
+            android:src="@drawable/icon_search"
+            android:layout_gravity="center_vertical|right"
+            android:background="@drawable/click_effect_general"
+            android:clickable="true"
+            android:layout_marginRight="5dp" />
+
+    </FrameLayout>
+-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/spotlist_listView"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+    </FrameLayout>
+
+</LinearLayout>

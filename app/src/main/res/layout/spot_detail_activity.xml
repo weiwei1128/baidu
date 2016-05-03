@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF" >
+
+        <FrameLayout
+            android:id="@+id/spotdetail_Layout"
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/spotDetail_text"
+                android:id="@+id/spotdetailHeader"
+                android:textSize="22dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="#5599FF"
+                android:textColor="#FFFFFF" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:id="@+id/spotdetail_backImg"
+                android:src="@drawable/arrow_back_white"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/click_effect_general" />
+        </FrameLayout>
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:id="@+id/spotdetail_Img"
+            android:layout_below="@+id/spotdetail_Layout"/>
+
+        <LinearLayout
+            android:id="@+id/spotdetailheader_Layout"
+            android:layout_below="@id/spotdetail_Img"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp">
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/circle_shape"
+                android:layout_marginRight="10dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="景點名稱"
+                android:id="@+id/spotdetailName_Text"
+                android:layout_gravity="center_vertical"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_below="@id/spotdetailheader_Layout"
+            android:id="@+id/spotdetail_View"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@color/yellow"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="10dp" />
+
+        <LinearLayout
+            android:layout_below="@id/spotdetail_View"
+            android:id="@+id/spotdetailList_Layout"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1. OpenTime"
+                android:id="@+id/opentime_Text"
+                android:textSize="16dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2. Address"
+                android:id="@+id/address_Text"
+                android:textSize="16dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_below="@id/spotdetailList_Layout"
+            android:id="@+id/split1_View"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#b5acac"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp" />
+
+        <LinearLayout
+            android:layout_below="@id/split1_View"
+            android:id="@+id/spotdetailinfo_Layout"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Ticket Info"
+                android:id="@+id/ticketinfo_Text"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp" />
+
+            <View
+                android:id="@+id/split2_View"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#b5acac"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Spot Detail"
+                android:id="@+id/spotdetail_Text"
+                android:textSize="16dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>
+

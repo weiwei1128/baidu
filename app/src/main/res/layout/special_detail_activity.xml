@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context="com.example.wei.travel.BuyItemDetailActivity">
+
+    <LinearLayout
+        android:id="@+id/specialitem_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#5599FF"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/specialitem_backImg"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/click_effect_general"
+                android:src="@drawable/arrow_back_white" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:autoText="false"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/special_text"
+        android:textColor="@color/white"
+        android:textSize="22dp" />
+
+    <ImageView
+        android:id="@+id/specailitem_Img"
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/specialitem_Layout" />
+
+    <LinearLayout
+        android:id="@+id/specialitemheader_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/specailitem_Img"
+        android:layout_marginLeft="20dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/circle_shape" />
+
+        <TextView
+            android:id="@+id/specialitemName_Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="標題"
+            android:textColor="@color/black"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/specialitem_View"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@id/specialitemheader_Layout"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:background="@color/yellow" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/specialitem_View"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp">
+
+        <TextView
+            android:id="@+id/specailitemDetail_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="內容"
+            android:textColor="@color/gray"
+            android:textSize="16dp" />
+    </ScrollView>
+
+</RelativeLayout>

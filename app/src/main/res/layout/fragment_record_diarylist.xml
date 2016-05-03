@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/DiaryImage" />
+
+    <com.daimajia.slider.library.SliderLayout
+        android:id="@+id/slider"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+    <com.daimajia.slider.library.Indicators.PagerIndicator
+        android:id="@+id/custom_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        custom:selected_color="#555555"
+        custom:unselected_color="#55555555"
+        custom:shape="oval"
+        custom:selected_padding_left="3dp"
+        custom:selected_padding_right="3dp"
+        custom:unselected_padding_left="3dp"
+        custom:unselected_padding_right="3dp"
+        custom:selected_width="8dp"
+        custom:selected_height="8dp"
+        custom:unselected_width="4dp"
+        custom:unselected_height="4dp"
+        android:gravity="center"
+        android:layout_alignBottom="@+id/slider"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp" />
+
+    <TextView
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Title"
+        android:id="@+id/Title"
+        android:layout_below="@+id/slider"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="7dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="TimeStamp"
+        android:id="@+id/TimeStamp"
+        android:layout_below="@+id/slider"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="8dp" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/TimeImageView"
+        android:src="@drawable/icon_time"
+        android:layout_below="@+id/slider"
+        android:layout_toLeftOf="@+id/TimeStamp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="MemoString"
+        android:id="@+id/DiaryString"
+        android:layout_below="@+id/Title"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="15dp" />
+
+</RelativeLayout>

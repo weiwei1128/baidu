@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+
+        <ImageView
+            android:id="@+id/SpotImg"
+            android:layout_width="90dp"
+            android:layout_height="70dp" />
+
+        <LinearLayout
+            android:layout_width="220dp"
+            android:layout_height="70dp"
+            android:id="@+id/SpotInfoLayout"
+            android:layout_toRightOf="@+id/SpotImg"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/SpotName"
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:text="Name"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="false"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/SpotAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="Address"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="15dp"
+                android:textColor="@color/gray" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="15dp"
+                    android:id="@+id/imageView_time"
+                    android:src="@drawable/icon_time"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="18dp"
+                    android:text="OpenTime"
+                    android:id="@+id/SpotOpenTime"
+                    android:textColor="@color/gray"
+                    android:textSize="13dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="center_vertical" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/imageView_bus"
+                android:src="@drawable/icon_bus"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="false"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:layout_gravity="right" />
+
+            <TextView
+                android:id="@+id/SpotDistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Distance"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_below="@+id/imageView_bus"
+                android:layout_alignParentRight="true"
+                android:layout_alignBottom="@+id/SpotName"
+                android:textSize="12dp"
+                android:textColor="@color/gray"
+                android:layout_gravity="right" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

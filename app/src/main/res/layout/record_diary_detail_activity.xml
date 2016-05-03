@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/DiaryDetailHeader_Layout"
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/Arecord_text"
+                android:id="@+id/DiaryDetailHeader"
+                android:textSize="22dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="#5599FF"
+                android:textColor="#FFFFFF" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:id="@+id/DiaryDetail_backImg"
+                android:src="@drawable/arrow_back_white"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/click_effect_general" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:id="@+id/DiaryDetail_shareImg"
+                android:src="@drawable/navigation_share"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/click_effect_general"
+                android:layout_gravity="center_vertical|right" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:id="@+id/DiaryDetailMap_Layout"
+            android:layout_below="@+id/DiaryDetailHeader_Layout">
+
+            <com.google.android.gms.maps.MapView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/DiaryDetailMap" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/gradient_background"
+                android:layout_gravity="bottom">
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:id="@+id/DiaryMapEnlarge_img"
+                android:src="@drawable/memo_enlarge"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp" />
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:id="@+id/DiaryMapReduce_img"
+                android:src="@drawable/memo_reduce"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Title"
+                android:id="@+id/DiaryDetailTitle"
+                android:layout_gravity="left|bottom"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@android:color/white" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/DiaryDetailContent_Layout"
+            android:layout_below="@+id/DiaryDetailMap_Layout"
+            android:orientation="vertical">
+
+            <com.flyingtravel.Utility.View.ExpandableHeightGridView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/DiaryDetailImg_gridView"
+                android:numColumns="auto_fit"
+                android:gravity="center"
+                android:columnWidth="50pt"
+                android:stretchMode="columnWidth"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp" />
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/DiaryDetailTxt_listView"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

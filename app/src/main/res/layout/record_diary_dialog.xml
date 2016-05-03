@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/recordupload_text"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:id="@+id/dialog_header_text"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/title_layout"
+        android:layout_below="@+id/dialog_header_text"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/recordtitle_text"
+            android:id="@+id/title_TextView"
+            android:layout_margin="10dp" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/title_editText"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/title_confirmTextView"
+            android:text="@string/ok_text"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textSize="20dp"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialog_scrollview"
+        android:layout_below="@+id/dialog_header_text"
+        android:layout_centerHorizontal="true"
+        android:padding="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/dialog_relativeLayout">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/dialog_img"
+                android:layout_gravity="center"
+                android:layout_centerHorizontal="true" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/content_layout"
+                android:layout_below="@+id/dialog_img"
+                android:orientation="vertical"
+                android:layout_centerHorizontal="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/recordmemo_text"
+                    android:id="@+id/content_TextView"
+                    android:layout_centerHorizontal="true" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:id="@+id/content_editText"
+                    android:layout_centerHorizontal="true" />
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/dialog_scrollview"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/dialog_choose_layout"
+        android:gravity="center_vertical"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:id="@+id/dialog_write_img"
+            android:src="@drawable/memo_note"
+            android:layout_weight="1"
+            android:background="@drawable/click_effect_general"
+            android:clickable="true" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:id="@+id/dialog_camera_img"
+            android:src="@drawable/memo_camera"
+            android:layout_weight="1"
+            android:background="@drawable/click_effect_general"
+            android:clickable="true" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:id="@+id/dialog_leave_img"
+            android:src="@drawable/memo_cancel"
+            android:layout_weight="1"
+            android:background="@drawable/click_effect_general" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dialog_scrollview"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/dialog_confirm_layout"
+        android:background="@drawable/click_effect_general"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="@string/ok_text"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textSize="20dp"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+</RelativeLayout>

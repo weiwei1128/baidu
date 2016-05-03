@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:id="@+id/special_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#5599FF"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/special_backImg"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/click_effect_general"
+                android:src="@drawable/arrow_back_white" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/special_viewpager"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/special_txtLayout"
+        android:layout_marginTop="5dp"
+        android:background="@color/white">
+
+    </android.support.v4.view.ViewPager>
+
+    <LinearLayout
+    android:id="@+id/special_txtLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/special_Layout"
+    android:layout_centerHorizontal="true"
+    android:background="#f7f7f7"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/lastpage_text"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginRight="50dp"
+        android:autoText="false"
+        android:background="@drawable/click_effect_general"
+        android:gravity="right"
+        android:text="&lt;"
+        android:textColor="@color/black"
+        android:textSize="22dp" />
+
+    <LinearLayout
+        android:id="@+id/special_textLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/nextpage_text"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:background="@drawable/click_effect_general"
+        android:gravity="left"
+        android:text=">"
+        android:textColor="@color/black"
+        android:textSize="22dp" />
+</LinearLayout>
+
+    <TextView
+        android:id="@+id/specialHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_weight="1"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/special_text"
+        android:textColor="@color/white"
+        android:textSize="22dp" />
+
+
+</RelativeLayout>
