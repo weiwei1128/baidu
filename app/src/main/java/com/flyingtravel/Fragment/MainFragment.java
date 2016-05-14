@@ -2,7 +2,6 @@ package com.flyingtravel.Fragment;
 
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -22,9 +21,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -34,13 +30,16 @@ import com.flyingtravel.Activity.ServiceActivity;
 import com.flyingtravel.Activity.Special.SpecialActivity;
 import com.flyingtravel.Activity.Spot.SpotActivity;
 import com.flyingtravel.Activity.WebviewActivity;
-import com.flyingtravel.HomepageActivity;
 import com.flyingtravel.ImageSlide.MainImageFragment;
 import com.flyingtravel.R;
 import com.flyingtravel.RecordActivity;
 import com.flyingtravel.Utility.DataBaseHelper;
 import com.flyingtravel.Utility.Functions;
+import com.flyingtravel.Utility.GlobalVariable;
 import com.flyingtravel.Utility.View.MyTextview2;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,11 +51,14 @@ public class MainFragment extends Fragment {
     MainImageFragment homefragment;
     Context context;
     Boolean ifStop = false;
-
-
     //    MyTextview news;
     MyTextview2 news;
     Bundle getSavedInstanceState;
+    /**
+     * GA
+     **/
+    public static GoogleAnalytics analytics;
+    public static Tracker tracker;
 
     public MainFragment() {
         // Required empty public constructor
@@ -89,36 +91,16 @@ public class MainFragment extends Fragment {
                     @Override
                     public void onClick(View widget) {
 //                        Log.d("4.14","onClick!");
+                        tracker.send(new HitBuilders.EventBuilder().setCategory("最新消息-ID:" + setup)
+//                .setAction("click")
+//                .setLabel("submit")
+                                .build());
                         Bundle bundle = new Bundle();
                         bundle.putString("NewsLink", link);
                         Functions.go(false, MainFragment.this.getActivity(), context,
                                 WebviewActivity.class,
-                        bundle
+                                bundle
                         );
-//                        Dialog dialog = new Dialog(context);
-//                        dialog.setContentView(R.layout.dialog_webview);
-//                        WebView webView = (WebView) dialog.findViewById(R.id.webView2);
-
-                        //mWebview.loadUrl("javascript:getDeviceID('maomao')");
-
-//                        webView.addJavascriptInterface(this, "mouseover");
-//                        WebSettings websettings = webView.getSettings();
-//                        webView.setWebViewClient(new WebViewClient() {
-//                            @Override
-//                            public void onPageFinished(WebView view, String url) {
-//                                super.onPageFinished(view, url);
-//                            }
-//
-//                        });
-//                        websettings.setSupportZoom(true);
-//                        websettings.setBuiltInZoomControls(true);
-//                        websettings.setJavaScriptEnabled(true);
-//                        webView.loadUrl(link);
-//                        dialog.setTitle(setup + "Clicked");
-//                        dialog.show();
-//                        news.setSelected(false);
-//                                    Toast.makeText(context, setup + "clicked!",
-//                                            Toast.LENGTH_SHORT).show();
                     }
                 }, spannableStringBuilder.length() - news_cursor.getString(0).length(), spannableStringBuilder.length(), 0);
                 spannableStringBuilder.append("     ");
@@ -128,29 +110,21 @@ public class MainFragment extends Fragment {
 
         } else
             news.setText(message);
-        /*
-        * String termsAndConditions = getResources().getString(R.string.terms_and_conditions);
-String privacyPolicy = getResources().getString(R.string.privacy_policy);
-
-legalDescription.setText(
-    String.format(
-        getResources().getString(R.string.message),
-        termsAndConditions,
-        privacyPolicy)
-);
-legalDescription.setMovementMethod(LinkMovementMethod.getInstance());
-
-Pattern termsAndConditionsMatcher = Pattern.compile(termsAndConditions);
-Linkify.addLinks(legalDescription, termsAndConditionsMatcher, "terms:");
-
-Pattern privacyPolicyMatcher = Pattern.compile(privacyPolicy);
-Linkify.addLinks(legalDescription, privacyPolicyMatcher, "privacy:");
-        * **/
         if (news_cursor != null)
             news_cursor.close();
-//        news.setText(message);
 
         super.onResume();
+        /**GA**/
+//        Log.i("5.6","======Resume=====");
+        tracker.setScreenName("主頁");
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        /**GA**/
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
     }
 
     @Override
@@ -164,7 +138,12 @@ Linkify.addLinks(legalDescription, privacyPolicyMatcher, "privacy:");
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Log.e("3.22", "=========Main onCreate");
+
+        /**GA**/
+        GlobalVariable globalVariable = (GlobalVariable) getActivity().getApplication();
+        tracker = globalVariable.getDefaultTracker();
+        /**GA**/
+
         this.context = getActivity();
         this.getSavedInstanceState = savedInstanceState;
         context.registerReceiver(getNewsBroadcast, new IntentFilter("news"));
@@ -224,8 +203,6 @@ Linkify.addLinks(legalDescription, privacyPolicyMatcher, "privacy:");
 
         //little trick
         ((LinearLayout.LayoutParams) news.getLayoutParams()).gravity = Gravity.CENTER_VERTICAL;
-//        news.scrollText(20);////開始跑囉
-//        news.startScroll();
         news.startFor0();
         news.setTextColor(Color.BLACK);
         /////跑馬燈
@@ -325,36 +302,8 @@ Linkify.addLinks(legalDescription, privacyPolicyMatcher, "privacy:");
                                     bundle.putString("NewsLink", link);
                                     Functions.go(false, MainFragment.this.getActivity(), context,
                                             WebviewActivity.class,
-                        bundle
+                                            bundle
                                     );
-//                                    Log.e("4.14","onClick!");
-//                                    Dialog dialog = new Dialog(context);
-//                                    dialog.setContentView(R.layout.dialog_webview);
-//                                    WebView webView = (WebView) dialog.findViewById(R.id.webView2);
-//
-//                                    WebSettings websettings = webView.getSettings();
-//                                    webView.addJavascriptInterface(this, "mouseover");
-//                                    webView.setWebViewClient(new WebViewClient() {
-//                                        @Override
-//                                        public void onPageFinished(WebView view, String url) {
-//                                            super.onPageFinished(view, url);
-//                                            view.loadUrl(link);
-//                                        }
-//
-//                                        @Override
-//                                        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//                                            return false;
-//                                        }
-//                                    });
-//                                    websettings.setSupportZoom(true);
-//                                    websettings.setBuiltInZoomControls(true);
-//                                    websettings.setJavaScriptEnabled(true);
-//                                    webView.loadUrl(link);
-//                                    dialog.setTitle(setup + "Clicked");
-//                                    dialog.show();
-//                                    news.setSelected(false);
-//                                    Toast.makeText(context, setup + "clicked!",
-//                                            Toast.LENGTH_SHORT).show();
                                 }
                             }, spannableStringBuilder.length() - news_cursor.getString(0).length(), spannableStringBuilder.length(), 0);
                             spannableStringBuilder.append("     ");
@@ -364,60 +313,8 @@ Linkify.addLinks(legalDescription, privacyPolicyMatcher, "privacy:");
 
                     } else
                         news.setText(message);
-                    /**
-                     *
-                     *
-                     private void customTextView(TextView view) {
-                     SpannableStringBuilder spanTxt = new SpannableStringBuilder(
-                     "I agree to the ");
-                     spanTxt.append("Term of services");
-                     spanTxt.setSpan(new ClickableSpan() {
-                    @Override public void onClick(View widget) {
-                    Toast.makeText(getApplicationContext(), "Terms of services Clicked",
-                    Toast.LENGTH_SHORT).show();
-                    }
-                    }, spanTxt.length() - "Term of services".length(), spanTxt.length(), 0);
-                     spanTxt.append(" and");
-                     spanTxt.setSpan(new ForegroundColorSpan(Color.BLACK), 32, spanTxt.length(), 0);
-                     spanTxt.append(" Privacy Policy");
-                     spanTxt.setSpan(new ClickableSpan() {
-                    @Override public void onClick(View widget) {
-                    Toast.makeText(getApplicationContext(), "Privacy Policy Clicked",
-                    Toast.LENGTH_SHORT).show();
-                    }
-                    }, spanTxt.length() - " Privacy Policy".length(), spanTxt.length(), 0);
-                     view.setMovementMethod(LinkMovementMethod.getInstance());
-                     view.setText(spanTxt, BufferType.SPANNABLE);
-                     }
-                     * **/
-
-                    /*
-
-String termsAndConditions = getResources().getString(R.string.terms_and_conditions);
-String privacyPolicy = getResources().getString(R.string.privacy_policy);
-
-legalDescription.setText(
-    String.format(
-        getResources().getString(R.string.message),
-        termsAndConditions,
-        privacyPolicy)
-);
-legalDescription.setMovementMethod(LinkMovementMethod.getInstance());
-
-Pattern termsAndConditionsMatcher = Pattern.compile(termsAndConditions);
-Linkify.addLinks(legalDescription, termsAndConditionsMatcher, "terms:");
-
-Pattern privacyPolicyMatcher = Pattern.compile(privacyPolicy);
-Linkify.addLinks(legalDescription, privacyPolicyMatcher, "privacy:");
-        * **/
-//                    if (news_cursor != null && news_cursor.getCount() > 0) {
-//                        news_cursor.moveToFirst();
-//                        message = news_cursor.getString(0);
-//                    }
                     if (news_cursor != null)
                         news_cursor.close();
-
-//                    news.setText(message);
 
                 }
                 if (intent.getBooleanExtra("banner", false) && !ifStop) {

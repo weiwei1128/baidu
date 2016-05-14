@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,6 +26,10 @@ import com.flyingtravel.HomepageActivity;
 import com.flyingtravel.R;
 import com.flyingtravel.Utility.DataBaseHelper;
 import com.flyingtravel.Utility.Functions;
+import com.flyingtravel.Utility.GlobalVariable;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -51,10 +56,26 @@ public class CheckScheduleActivity extends AppCompatActivity {
     WebView webView;
     Boolean ifWebView = false;
 
+    public static GoogleAnalytics analytics;
+    public static Tracker tracker;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        /**GA**/
+        tracker.setScreenName("行程查詢");
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        /**GA**/
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.checkschedule_basic);
+        /**GA**/
+        GlobalVariable globalVariable = (GlobalVariable)getApplication();
+        tracker = globalVariable.getDefaultTracker();
+        /**GA**/
         backImg = (LinearLayout) findViewById(R.id.checkschedule_backImg);
         backImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +119,7 @@ public class CheckScheduleActivity extends AppCompatActivity {
 
         }
     }
+
 
     void setupWebview() {
 //        Log.i("3.25", "setWebView");

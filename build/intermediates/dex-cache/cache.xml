@@ -2,298 +2,354 @@
 <items version="2" >
 
     <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.crashlytics.sdk.android/beta/1.1.4/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="ad5bb101ced4d3939225c9b57e5a3d81547c1fbb">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.crashlytics.sdk.android-beta-1.1.4_229bf8d0522e026e96bc0c69ec2cf3d0a87372b9.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/io.fabric.sdk.android/fabric/1.3.10/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="a5db9a2dd46d84285ef737f65030b74b6e8ee2a4">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/io.fabric.sdk.android-fabric-1.3.10_94047a32e992da3dffb2ba0e94f9f9a05efc102f.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/8.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="c54246475c1bb64ac6857d1320364bfbfeda2c46">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-fitness-8.4.0_fc93a8ad602ca97894a137cd81489cffcae8923d.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/8.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="551e78f21acf69ebfb489c0e79647824c838013e">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-cast-8.4.0_d196932bbf903f7e849de84dee0c1682b155f18a.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.2.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="8c108c22c99e794eff255bb34d2a461200c4cbb0">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-23.2.0_4ae37117592d97de3472e4909c84dde5d792b5e2.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-base-8.4.0_889175358eb1071773914b6b237c90e50c8e2e6e.jar" />
-    </item>
-    <item
-        jar="/Users/wei/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpmime/4.3.2/3202421d9425ced69919b282afa644e7ef0e8fef/httpmime-4.3.2.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="3202421d9425ced69919b282afa644e7ef0e8fef">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/httpmime-4.3.2_7e3334306c994f6dbd03cae2bcae81925abf0658.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-vision/8.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="dfecc4d835cdabcdecf7e95f0d20a3ef1e9d8ef4">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-vision-8.4.0_b0c11d1f9e49b5613e988189a9c4227697d3543c.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/8.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="b36f30ac5ee5d5214f4b1e2ac49f11889d58e71a">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-drive-8.4.0_9d22207d9eeb15376b3ce1053619659b55e85217.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/8.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="a8412b654dab86d57bf90683367488211c8a81f1">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-location-8.4.0_f2a634202193c1e8fcd69982f5ff41da8278b37a.jar" />
-    </item>
-    <item
-        jar="/Users/wei/android-sdks/extras/android/m2repository/com/android/support/support-annotations/23.2.0/support-annotations-23.2.0.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="c5bf571bb10462bd90e5419ade67793f71acbc87">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/support-annotations-23.2.0_d0f7f8c7a226b6b91fc645bce579013af0b4368d.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/8.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="b5e7892fb0708e792e0e933c4c0a0ca0ac7831fb">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-ads-8.4.0_f7cb1192ebd12688f139107f89d9067dc47d65b0.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.2.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="292a9fa091757208efa65e77eef63088247e51f3">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-23.2.0_82d9d5d056b3b1095d0b086badac3196f569e5d5.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/8.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="2d7fe76982677315c4dc4edfb459c8ca718a9d4c">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-gcm-8.4.0_a2154c2568934954d305e864ff45b1c4ed74c8ca.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/libs/universal-image-loader-1.9.4.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="dd9eeb557650c4ad7394df23f0f5cf27a7cfc697">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/universal-image-loader-1.9.4_c2b5eaa509158f4d567128b3485cce5808012b9b.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.2.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="d4c936aa8c7d2522c82e3f1829c791d9e367f009">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-23.2.0_d47b6b9158493d71f16463771fa318b60d7a2e75.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/8.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="b82b8e847173c28efffcd291b2a0b1ae9ad17fa4">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-identity-8.4.0_0065f7a4604bd0accb96ea4180ad9c7fd0a86b70.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/8.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="1a78298e7724d5440d210bcb946b3493250d354d">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-plus-8.4.0_e8d994b9a7f4b81cadac5d7da4a3b5062b3a4001.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/8.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="04de44f90606c77f3b28cf44861f306290505aac">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-maps-8.4.0_ff1b77dd0b70f02938e884d5db033c4851661495.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/8.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="3a364cc6b698d1b3b2d284f64618daaa7fe77ddf">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-games-8.4.0_06d601da65c784731af3345246b4b24392261e67.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-basement-8.4.0_1e2c113fc4e6bd6d7fd228b742118a0c3c27f0d4.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.android.support/design/23.2.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="1aa5b025efe97f5006f5be16d6ca67c6c3c0c0d8">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.android.support-design-23.2.0_7dc09abd8164522251c54fedffe1eb47b2b97ede.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth/8.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="966e5771a5a2ebfb31bf00d7cd6cd2546d245517">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-auth-8.4.0_b27907974b5b0e1974a0b23acda62290e3ff55bf.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/23.0.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="d358b3dd49a7c67844622dcbc9cf4339e13952ce">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.android.support-mediarouter-v7-23.0.0_4f2d08c7d58c7d2511cde58d441159be6e14fadf.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/8.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="1c9f35e952b212c843f7bd2c7eec8e82ad95602e">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-analytics-8.4.0_033284857a74b868bd66f474586e5bc73f3b3ea4.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/8.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="9fe026fb4c7fce21bc5142f6e1bdf844f28061ac">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-appinvite-8.4.0_f722c6da3770f1421cfaea198e7f1cf6a82e947b.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/8.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="9cad249cf62751a323d9af568caf12284b7d6062">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-nearby-8.4.0_42a58540f3803c3dc5511ef87546309d8845732e.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="613298b7aa012f121ce542881c0a599ebd8078f2">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-measurement-8.4.0_a2fda64963097eb5356795941e619c7bcaf373c8.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/23.0.0/jars/libs/internal_impl-23.0.0.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="03d38bb042efe3e5ce27ba66b729a9523c36d8fe">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.0_17e505520a54cd981534923be6b335bcc976d40c.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.0/jars/libs/internal_impl-23.2.0.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="6e239441500605809818997dd63b62a947195f8c">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/internal_impl-23.2.0_544e8c8b235339fd2b5f33124e0412d8648f89b4.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/8.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="e167a34eaca0b31704212f43f9576ea84e05046f">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-wearable-8.4.0_9e542b58a1dd93f4b9f20cd85ac00ab1b0bcb4a3.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="6e3578f92f7462d1a935a1d36173e3bdd1234976">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.2.0_793666d3985f65020deeea4f82ed5aad8fce6d21.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/8.4.0/jars/classes.jar"
-        jumboMode="false"
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-panorama\8.4.0\jars\classes.jar"
+        jumboMode="true"
         revision="23.0.2"
         sha1="08d34b2d135c1cc96ab506fd8bf6916d1e2f391a">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-panorama-8.4.0_cb6948968964bf7e10c6d2466b52b8f5e825e3d2.jar" />
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-panorama-8.4.0_7069f2bf364c56c19091e6d04f5c426b72022959\classes.dex" />
     </item>
     <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.0/jars/classes.jar"
-        jumboMode="false"
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
         revision="23.0.2"
-        sha1="e5f32fa48a3eb2de0c987025c11b6e3864b634d9">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.2.0_80b0e98da734134e0b7c7f316a69c82bf810fe5f.jar" />
+        sha1="ae799e6fc84e085d5c0c99da43f31eae9170b815">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_1fc7cb62e9bb68c3ea6a6f86642978126f205fb3\classes.dex" />
     </item>
     <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/8.4.0/jars/classes.jar"
-        jumboMode="false"
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.3.0\jars\classes.jar"
+        jumboMode="true"
         revision="23.0.2"
-        sha1="65d086ee9daaf87b5af62ad24471edafa433354c">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-appindexing-8.4.0_7d9d3bbd10a67e2f12248b940378a748bdebd996.jar" />
+        sha1="debf30ce0a7560396b6235edef77e447006454c2">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-23.3.0_ab37d9c1eaca0b7e5382d879613e65f3e38d9032\classes.dex" />
     </item>
     <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/libs/gson-2.5.jar"
-        jumboMode="false"
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\8.4.0\jars\classes.jar"
+        jumboMode="true"
         revision="23.0.2"
-        sha1="686c608d1805b6d4d425ec4459e88164ffc85870">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/gson-2.5_1dd754ad8b9fc32c17f30c0b11fa5f0aa491e0b9.jar" />
+        sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-base-8.4.0_13221613d2390f716388f687f5509b27001ecd17\classes.dex" />
     </item>
     <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/8.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="0194a7409c40de94fb539d4ad9928ec5d47afeb7">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-safetynet-8.4.0_ce636246e3498a4a0c149c6562b2c1aca56bc21c.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.crashlytics.sdk.android/crashlytics/2.5.5/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="611605b6b640c1558f9bdea41de8ff837ab68ca8">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.crashlytics.sdk.android-crashlytics-2.5.5_72584277ba036f0b18d43347f90ecc8ad8d0ed03.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/8.4.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="f2df436a8f02ce7e4d7d209671fc45f97c470f0e">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-wallet-8.4.0_23c9a0a7ff3d18c751922660a7d512dd666491cd.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/libs/httpcore-4.3-beta1.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="a293723fe90abe781acb4efaacaecdf2108f346d">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/httpcore-4.3-beta1_2202bcd3eea9f6f0c05c2b1c3cfd35e4393f81e4.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.crashlytics.sdk.android/crashlytics-core/2.3.8/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="c9ef45dcbd082cd63aac09a5e2cd443adb5df837">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.crashlytics.sdk.android-crashlytics-core-2.3.8_73a873002af984390eb670927a80ad1201400699.jar" />
-    </item>
-    <item
-        jar="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/exploded-aar/com.crashlytics.sdk.android/answers/1.3.6/jars/classes.jar"
-        jumboMode="false"
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.crashlytics.sdk.android\answers\1.3.6\jars\classes.jar"
+        jumboMode="true"
         revision="23.0.2"
         sha1="9af3b9b8114e685291aa00e6572b0a9131244956">
-        <dex dex="/Users/wei/Dropbox/dev/Travel/app/build/intermediates/pre-dexed/debug/com.crashlytics.sdk.android-answers-1.3.6_ea3b34c6eea58fadf7db3eeabaeddaf3fa37e932.jar" />
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.crashlytics.sdk.android-answers-1.3.6_5d7193525ce7336107511297eaa8d592f04086fd\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="1a238a8b6b60555970a3ddf863e2162d3ba146bc">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_99b91c894e559cd27f4a2b05ef2086effc61b375\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.android.support\design\23.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="f0001e71cea6ae432a00021c6f727f5ef0f3d27e">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-23.3.0_cdc7dde4ecefcf6ea1f3e75abde6446d9cd7c74f\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="8a034dd16c0dfd75fe86c52c2cd581592acc684a">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-23.3.0_d4d01ccbb4b55160c054fa4ee9cf05d500cfe9e7\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-measurement\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="613298b7aa012f121ce542881c0a599ebd8078f2">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-measurement-8.4.0_8ca08c82ef5d18fb21821a21e4fd1c7c9d73f192\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\libs\BaiduLBS_Android.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="278f41c38272b06134ea3d72425ce4d05289314d">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\2\BaiduLBS_Android_c4d90e6b58fd1d57b402169fe6ed31008684c571\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="65d086ee9daaf87b5af62ad24471edafa433354c">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-appindexing-8.4.0_b3a6f91d2be146ea3526cf77bc8c291edbf460d8\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="23be6993826b8fd88bbc8d14928bb3b8960d3d4e">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-23.3.0_82a849d951b92eaabe8f413793d7ad35594aebed\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wallet\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="f2df436a8f02ce7e4d7d209671fc45f97c470f0e">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-wallet-8.4.0_a3db6a5250f3964f215ed657d0d88b92d94e162e\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-gcm\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="2d7fe76982677315c4dc4edfb459c8ca718a9d4c">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-gcm-8.4.0_92fdc9b5aa3676a90fa03e8e21dbc19985251ca4\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\libs\gson-2.5.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="686c608d1805b6d4d425ec4459e88164ffc85870">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\2\gson-2.5_00fa92bdee492e87ba412b2dacd415aa2358b961\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-plus\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="1a78298e7724d5440d210bcb946b3493250d354d">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-plus-8.4.0_98cce4aa5e2189ae498b13c513ec98591d5f1d68\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-analytics\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="1c9f35e952b212c843f7bd2c7eec8e82ad95602e">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-analytics-8.4.0_519cc4058b5d43e8453b8ac0b2b09c5bd5ad1f6c\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.crashlytics.sdk.android\crashlytics-core\2.3.8\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="c9ef45dcbd082cd63aac09a5e2cd443adb5df837">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.crashlytics.sdk.android-crashlytics-core-2.3.8_65ac98ca12b0b99613fba2b6882b1ecb82c97d63\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-safetynet\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="0194a7409c40de94fb539d4ad9928ec5d47afeb7">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-safetynet-8.4.0_82de6a2b58b9b45d9990f8ab5e21bbd2dccc9bce\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="a0b5d60246cd9d4f3f2443611b3b4c25265840b5">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-23.3.0_3dd0b43016153ee780cdb2e258bc8c4570866cf9\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\libs\gcm.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="92bef354f25f31cb76bd1a4f1c1df87b498a9ebf">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\2\gcm_2b93b5877bbb7f204f691ce603f233160aff242a\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.3.0\support-annotations-23.3.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="db7791d75a07fef9844d06236c1c59ba7bf6997c">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-23.3.0_33152774cf4c25e2729c9e2f1cae0c79a1d3553a\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\23.0.0\jars\libs\internal_impl-23.0.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="03d38bb042efe3e5ce27ba66b729a9523c36d8fe">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-23.0.0_b518ed1f7d817dce2113e58240f947bca2be6847\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.android.support\multidex\1.0.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="78ea232052df889856dcb7b7b542707c89bb3bfb">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-multidex-1.0.1_f26aad3f652f5ad3dc0a02d1ef7d7ba0bf753c7d\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-nearby\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="9cad249cf62751a323d9af568caf12284b7d6062">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-nearby-8.4.0_40c7631476bf5b704a13fc0dec72806792b98dcb\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="04de44f90606c77f3b28cf44861f306290505aac">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-maps-8.4.0_2ee0f00b63be5706fe17d9c5630994a8b3905562\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-fitness\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="c54246475c1bb64ac6857d1320364bfbfeda2c46">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-fitness-8.4.0_43629323dcb20780ad9d07bcb751bc1467047c13\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-drive\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="b36f30ac5ee5d5214f4b1e2ac49f11889d58e71a">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-drive-8.4.0_f07c96152e5e1ffd5077424a14ad046e3df47318\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wearable\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="e167a34eaca0b31704212f43f9576ea84e05046f">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-wearable-8.4.0_fa28d5b7c4f71a5b9f14073dd832ee32a13ceb0d\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-cast\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="551e78f21acf69ebfb489c0e79647824c838013e">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-cast-8.4.0_06f1dee7f4491d3ae318012bc2e4ef5f9d290542\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-identity\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="b82b8e847173c28efffcd291b2a0b1ae9ad17fa4">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-identity-8.4.0_3f2125006beeb0d886fc52ff5279d27ee51149d8\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.crashlytics.sdk.android\crashlytics\2.5.5\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="611605b6b640c1558f9bdea41de8ff837ab68ca8">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.crashlytics.sdk.android-crashlytics-2.5.5_d30c8219c4ab3c7a26ce697ec58d052727e10634\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\libs\IndoorscapeAlbumPlugin.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="b6c8bf896e0d23f4003b9a3cab4bff9af9adefda">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\2\IndoorscapeAlbumPlugin_ccb913544768d8806bcade00daf30f7f23cc0c86\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-location\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="a8412b654dab86d57bf90683367488211c8a81f1">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-location-8.4.0_d9f6da61c551d6ac232fb7852bd61b30d02179ca\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-vision\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="dfecc4d835cdabcdecf7e95f0d20a3ef1e9d8ef4">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-vision-8.4.0_3ec5e2d4a41097fd4a44e7081308c3934a6547f0\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="b5e7892fb0708e792e0e933c4c0a0ca0ac7831fb">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-ads-8.4.0_1328a87d651475218d7c4651e7b2fc5e0e449aa9\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\.gradle\caches\modules-2\files-2.1\com.nineoldandroids\library\2.4.0\e9b63380f3a242dbdbf103a2355ad7e43bad17cb\library-2.4.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\library-2.4.0_290c6c82b7531f624c4a381cdd56e21bdc564a64\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-auth\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="966e5771a5a2ebfb31bf00d7cd6cd2546d245517">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-auth-8.4.0_6f4a0547c9e97ff701b934439003cebf18ed588d\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.3.0\jars\libs\internal_impl-23.3.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="4da5a4d697d32497c6f85567a5112e62fdfd0676">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-23.3.0_4f368b519305e70adf22099607fb65b2a9e0aaa7\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\libs\httpcore-4.3-beta1.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="a293723fe90abe781acb4efaacaecdf2108f346d">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\2\httpcore-4.3-beta1_4240acd495790111819e452b9c27515e47857851\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\io.fabric.sdk.android\fabric\1.3.10\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="a5db9a2dd46d84285ef737f65030b74b6e8ee2a4">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\io.fabric.sdk.android-fabric-1.3.10_6adbb9d92a346b55d955451860ec4299aa0cbf95\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-basement-8.4.0_2919e339eedf0f9af93a80db999986150d0711dc\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.3.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="1b8e03daaa43fb0a4cd57e378167c2fd70454c1e">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-23.3.0_9db5b68e797992b904c3e1c9ad512f8f10ec3793\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\picasso-2.5.2_aefc444e6fe3b7d0489547f04d54afb75b841b36\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\libs\universal-image-loader-1.9.4.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="dd9eeb557650c4ad7394df23f0f5cf27a7cfc697">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\2\universal-image-loader-1.9.4_24420244ff2c6910bc5732b04bd6e8204993a116\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appinvite\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="9fe026fb4c7fce21bc5142f6e1bdf844f28061ac">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-appinvite-8.4.0_b3f817d133f08cf192230e5602ad09199df0f0f5\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-games\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="3a364cc6b698d1b3b2d284f64618daaa7fe77ddf">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-games-8.4.0_c7d6c0ebf85065f5215a69187da0274a97450780\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\23.0.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="d358b3dd49a7c67844622dcbc9cf4339e13952ce">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-mediarouter-v7-23.0.0_df876f97c5a77429627ec39def0e00f6b7c3bc72\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\.gradle\caches\modules-2\files-2.1\org.apache.httpcomponents\httpmime\4.3.2\3202421d9425ced69919b282afa644e7ef0e8fef\httpmime-4.3.2.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="3202421d9425ced69919b282afa644e7ef0e8fef">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\httpmime-4.3.2_50684aa1fa869012ee8c9fc649318055a45e3348\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\exploded-aar\com.crashlytics.sdk.android\beta\1.1.4\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="ad5bb101ced4d3939225c9b57e5a3d81547c1fbb">
+        <dex dex="C:\Users\tinghua\Documents\GitHub\baidu\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.crashlytics.sdk.android-beta-1.1.4_7d014b79e43474c39ff0e459a8562cc856497abf\classes.dex" />
     </item>
 
 </items>

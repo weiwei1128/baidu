@@ -20,6 +20,9 @@ import com.flyingtravel.HomepageActivity;
 import com.flyingtravel.R;
 import com.flyingtravel.Utility.DataBaseHelper;
 import com.flyingtravel.Utility.Functions;
+import com.flyingtravel.Utility.GlobalVariable;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,17 +38,28 @@ public class SpecialActivity extends AppCompatActivity {
     SQLiteDatabase database;
     FragmentManager fragmentManager;
     TextView number, lastPage, nextPage;
-    ;
+    /**
+     * GA
+     **/
+    public static Tracker tracker;
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
+        /**GA**/
+        tracker.setScreenName("即時好康");
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        /**GA**/
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.special_activity);
+        /**GA**/
+        GlobalVariable globalVariable = (GlobalVariable) getApplication();
+        tracker = globalVariable.getDefaultTracker();
+        /**GA**/
         lastPage = (TextView) findViewById(R.id.lastpage_text);
         lastPage.setVisibility(View.INVISIBLE);
         nextPage = (TextView) findViewById(R.id.nextpage_text);

@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -19,6 +18,9 @@ import android.widget.Toast;
 import com.flyingtravel.R;
 import com.flyingtravel.Utility.DataBaseHelper;
 import com.flyingtravel.Utility.Functions;
+import com.flyingtravel.Utility.GlobalVariable;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -51,7 +53,8 @@ public class BuyItemListConfirmActivity extends AppCompatActivity {
     final HashSet<String> removeList = new HashSet<>();
     int removeCount = 0;
     final HashMap<Integer, String> remove = new HashMap<>();
-
+    /*GA*/
+    public static Tracker tracker;
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -67,13 +70,15 @@ public class BuyItemListConfirmActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.buyitem_list_confirm_activity);
+        /**GA**/
+        GlobalVariable globalVariable = (GlobalVariable) getApplication();
+        tracker = globalVariable.getDefaultTracker();
+        /**GA**/
         Bundle bundle = this.getIntent().getExtras();
         if (bundle != null && bundle.containsKey("AfterPay") && bundle.getBoolean("AfterPay"))
             finish();
 
-
-
-        helper =DataBaseHelper.getmInstance(BuyItemListConfirmActivity.this);
+        helper = DataBaseHelper.getmInstance(BuyItemListConfirmActivity.this);
         database = helper.getWritableDatabase();
 
         UI();
@@ -88,11 +93,15 @@ public class BuyItemListConfirmActivity extends AppCompatActivity {
         confrimLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(nameEdit.getText().toString().equals("")||telEdit.getText().toString().equals("")||
-                        emailEdit.getText().toString().equals("")||addrEdit.getText().toString().equals(""))
+                if (nameEdit.getText().toString().equals("") || telEdit.getText().toString().equals("") ||
+                        emailEdit.getText().toString().equals("") || addrEdit.getText().toString().equals(""))
                     Toast.makeText(BuyItemListConfirmActivity.this,
-                            BuyItemListConfirmActivity.this.getResources().getString(R.string.InputData_text),Toast.LENGTH_SHORT).show();
+                            BuyItemListConfirmActivity.this.getResources().getString(R.string.InputData_text), Toast.LENGTH_SHORT).show();
                 else {
+                    tracker.send(new HitBuilders.EventBuilder().setCategory("伴手禮購買")
+//                .setAction("click")
+//                .setLabel("submit")
+                            .build());
                     Cursor member_cursor = database.query("member", new String[]{"account", "password",
                             "name", "phone", "email", "addr"}, null, null, null, null, null);
                     if (member_cursor != null) {
@@ -100,7 +109,7 @@ public class BuyItemListConfirmActivity extends AppCompatActivity {
                             member_cursor.moveToFirst();
                             idS = member_cursor.getString(0);
                         }
-                        member_cursor.close();//old85->102
+                        member_cursor.close();
                     }
                     if (!nameEdit.getText().toString().equals(""))
                         nameS = nameEdit.getText().toString();
@@ -114,17 +123,8 @@ public class BuyItemListConfirmActivity extends AppCompatActivity {
                         messageS = messageEdit.getText().toString();
                     new SendOrder().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
-//                for (Object key : cartList.keySet()) {
-//                    System.out.println(key + " : " + cartList.get(key));
-//                }
-
-
-//                Toast.makeText(BuyItemListConfirmActivity.this, "建構中!", Toast.LENGTH_SHORT).show();
-//                Log.i("3.24", "要remove的東西:" + removeList.size());
             }
         });
-//        removeList.add(sharedPreferences.getString("InBuyList", null) + "");
-//        Log.i("3.24", "INBUYLIST:" + sharedPreferences.getInt("InBuyList", 0));
 
     }
 
@@ -138,6 +138,23 @@ public class BuyItemListConfirmActivity extends AppCompatActivity {
         addrEdit = (EditText) findViewById(R.id.buyitemlistconfirm_addrEdit);
         messageEdit = (EditText) findViewById(R.id.buyitemlistconfirm_messageEdit);
         totalText = (TextView) findViewById(R.id.buyitemlistconfirm_totalText);
+        Cursor member_cursor = database.query("member", new String[]{"account", "password",
+                "name", "phone", "email", "addr"}, null, null, null, null, null);
+        if (member_cursor != null && member_cursor.getCount() > 0) {
+            member_cursor.moveToFirst();
+            if (member_cursor.getString(2) != null)
+                nameEdit.setText(member_cursor.getString(2));
+            if (member_cursor.getString(3) != null)
+                telEdit.setText(member_cursor.getString(3));
+            if (member_cursor.getString(4) != null)
+                emailEdit.setText(member_cursor.getString(4));
+            if (member_cursor.getString(5) != null)
+                addrEdit.setText(member_cursor.getString(5));
+        }
+        if (member_cursor != null)
+            member_cursor.close();
+
+
         int totalnumber = 0, getitemPosition = 0, BiginCart = 0, totalmoney = 0;
         String BigitemID = null, SmallitemID = null, itemName = null;
         Cursor goods_cursor = database.query("goods", new String[]{"totalCount", "goods_id", "goods_title",
@@ -173,8 +190,8 @@ public class BuyItemListConfirmActivity extends AppCompatActivity {
                                 int money = Integer.valueOf(goods_cursor_big.getString(3)) * smallItemCount;
                                 totalmoney = totalmoney + money;
                                 buylistText.append(goods_cursor.getString(2) + " " + goods_cursor_big.getString(2) + " : "
-                                        + smallItemCount +BuyItemListConfirmActivity.this.getResources().getString(R.string.a_text)
-                                        +" $" + money + "\n");
+                                        + smallItemCount + BuyItemListConfirmActivity.this.getResources().getString(R.string.a_text)
+                                        + " $" + money + "\n");
                                 cartList.put(SmallitemID, smallItemCount);
                             }
                         }

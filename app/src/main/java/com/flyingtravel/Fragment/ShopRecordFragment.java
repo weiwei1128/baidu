@@ -20,8 +20,11 @@ import com.flyingtravel.R;
 import com.flyingtravel.Activity.ShopRecordItemActivity;
 import com.flyingtravel.Utility.DataBaseHelper;
 import com.flyingtravel.Utility.Functions;
+import com.flyingtravel.Utility.GlobalVariable;
 import com.flyingtravel.Utility.OrderGet;
 import com.flyingtravel.Utility.OrderUpdate;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 
 /**
@@ -39,6 +42,8 @@ public class ShopRecordFragment extends Fragment {
     GridView gridView;
     public ShopRecordAdapter adapter;
     ProgressDialog dialog;
+    /**GA**/
+    public static Tracker tracker;
 
 
     public ShopRecordFragment() {
@@ -58,6 +63,10 @@ public class ShopRecordFragment extends Fragment {
             }
         }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         super.onResume();
+        /**GA**/
+        tracker.setScreenName("訂單");
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        /**GA**/
     }
 
     @Override
@@ -65,8 +74,9 @@ public class ShopRecordFragment extends Fragment {
         super.onCreate(savedInstanceState);
         dialog = new ProgressDialog(getActivity());
         this.context = getActivity();
-
-
+        /**GA**/
+        GlobalVariable globalVariable = (GlobalVariable)getActivity().getApplication();
+        tracker = globalVariable.getDefaultTracker();
     }
 
     @Override

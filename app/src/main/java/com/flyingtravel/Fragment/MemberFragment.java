@@ -24,6 +24,10 @@ import android.widget.Toast;
 
 import com.flyingtravel.R;
 import com.flyingtravel.Utility.DataBaseHelper;
+import com.flyingtravel.Utility.GlobalVariable;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -34,8 +38,9 @@ import java.io.InputStream;
 public class MemberFragment extends Fragment {
     Context context;
     TextView NameText, PhoneText, EmailText, AddrText;
-    LinearLayout logoutLayout, shareLayout,ratingLayout;
-
+    LinearLayout logoutLayout, shareLayout,ratingLayout,telLayout;
+    public static GoogleAnalytics analytics;
+    public static Tracker tracker;
     public MemberFragment() {
         // Required empty public constructor
     }
@@ -44,8 +49,21 @@ public class MemberFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.context = getActivity();
+        /**GA**/
+        GlobalVariable globalVariable = (GlobalVariable)getActivity().getApplication();
+        tracker = globalVariable.getDefaultTracker();
+        /**GA**/
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+//        Log.i("5.6","======Resume=====");
+        /**GA**/
+        tracker.setScreenName("會員");
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        /**GA**/
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,6 +77,7 @@ public class MemberFragment extends Fragment {
         logoutLayout = (LinearLayout) view.findViewById(R.id.member_logout_layout);
         shareLayout = (LinearLayout) view.findViewById(R.id.member_share_layout);
         ratingLayout = (LinearLayout)view.findViewById(R.id.member_value_layout);
+        telLayout = (LinearLayout)view.findViewById(R.id.member_tel_layout);
         NameText = (TextView) view.findViewById(R.id.member_name_text);
         PhoneText = (TextView) view.findViewById(R.id.member_phone_text);
         EmailText = (TextView) view.findViewById(R.id.member_email_text);
@@ -81,6 +100,16 @@ public class MemberFragment extends Fragment {
             member_cursor.close();
         if (database.isOpen())
             database.close();
+        //=====telephone====//
+        telLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("5.12","click");
+                String phone = PhoneText.getText().toString();
+                Intent intent = new Intent("android.intent.action.CALL",Uri.parse("tel:"+phone));
+                startActivity(intent);
+            }
+        });
         //=======Logout=======//
 
 
@@ -107,6 +136,10 @@ public class MemberFragment extends Fragment {
         shareLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tracker.send(new HitBuilders.EventBuilder().setCategory("分享")
+//                .setAction("click")
+//                .setLabel("submit")
+                        .build());
 //                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 Intent sharingIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
                 //drawable -> bitmap
@@ -147,7 +180,7 @@ public class MemberFragment extends Fragment {
                 * */
                 //setting share information
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getContext().getResources().getString(R.string.title_text));
-                sharingIntent.putExtra(Intent.EXTRA_TEMPLATE,"testtt");
+//                sharingIntent.putExtra(Intent.EXTRA_TEMPLATE,"testtt");
 //                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getContext().getResources().getString(R.string.title_text));
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.flyingtravel");
 
@@ -173,6 +206,10 @@ public class MemberFragment extends Fragment {
         });
     }
     private void launchMarket() {
+        tracker.send(new HitBuilders.EventBuilder().setCategory("評價")
+//                .setAction("click")
+//                .setLabel("submit")
+                .build());
         Uri uri = Uri.parse("market://details?id=" + context.getPackageName());
         Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
         try {
@@ -180,6 +217,7 @@ public class MemberFragment extends Fragment {
         } catch (ActivityNotFoundException e) {
             Toast.makeText(context, " unable to find market app", Toast.LENGTH_LONG).show();
         }
+
     }
 
     DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
@@ -190,8 +228,8 @@ public class MemberFragment extends Fragment {
                     DataBaseHelper helper = DataBaseHelper.getmInstance(context);
                     SQLiteDatabase database = helper.getWritableDatabase();
                     database.delete("member", null, null);
-                    if (database.isOpen())
-                        database.close();
+//                    if (database.isOpen())
+//                        database.close();
                     Intent MyIntent = new Intent(Intent.ACTION_MAIN);
                     MyIntent.addCategory(Intent.CATEGORY_HOME);
                     MyIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

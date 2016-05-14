@@ -58,8 +58,6 @@ public class HttpService extends Service {
         new News().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new Special().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
-        //new JsonMemoList(context).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
         return 1;
     }
 
@@ -121,7 +119,7 @@ public class HttpService extends Service {
 //                Log.d("3.7", "BannerService result:" + jsonArray.length());
                 DataBaseHelper helper = DataBaseHelper.getmInstance(context);
                 SQLiteDatabase database = helper.getWritableDatabase();
-                Cursor cursor = database.query("banner", new String[]{"img_url"}, null, null, null, null, null);
+                Cursor cursor = database.query("banner", new String[]{"img_url", "link","bannerid"}, null, null, null, null, null);
                 if (cursor != null && cursor.getCount() > 0)
                     database.delete("banner", null, null);
                 if (cursor != null)
@@ -139,13 +137,25 @@ public class HttpService extends Service {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    //link_url"
                     try {
                         contentValues.clear();
                         contentValues.put("img_url", "http://zhiyou.lin366.com" + jsonArray.getJSONObject(i).getString("img_url"));
-                        database.insert("banner", null, contentValues);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    try {
+                        contentValues.put("link", jsonArray.getJSONObject(i).getString("link_url"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    //id
+                    try {
+                        contentValues.put("bannerid", jsonArray.getJSONObject(i).getString("id"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    database.insert("banner", null, contentValues);
                 }
                 editor.apply();
             }
@@ -342,7 +352,7 @@ public class HttpService extends Service {
                     } catch (JSONException | NullPointerException e) {
                         e.printStackTrace();
                     }
-                    Log.e("3.10","price**title"+jsonObjects[i][1]);
+//                    Log.e("3.10","price**title"+jsonObjects[i][1]);
                     try {
                         jsonObjects[i][2] = jsonArray.getJSONObject(i).getString("img_url");
                     } catch (JSONException | NullPointerException e) {
@@ -394,7 +404,7 @@ public class HttpService extends Service {
                             cv.put("price", jsonObjects[i][5]);
                             cv.put("click", jsonObjects[i][4]);
                             long result = database.insert("special_activity", null, cv);
-                            Log.e("4.19", "3 price:" + jsonObjects[i][5]+" title"+jsonObjects[i][1]);
+                            Log.e("4.19", "3 price:" + jsonObjects[i][5] + " title" + jsonObjects[i][1]);
 //                            Log.d("3.10", "special_activity: " + result + " = DB INSERT" + i + "title " + jsonObjects[i][1]);
                         }
                     else { //資料庫已經有資料了!

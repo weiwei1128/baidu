@@ -1,7 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <ListView
         android:layout_width="match_parent"
@@ -9,4 +10,25 @@
         android:id="@+id/schedule_gridview"
         android:numColumns="1"
         android:background="@color/white" />
+
+    <LinearLayout
+        android:id="@+id/checkschedule_allLayout"
+        android:layout_below="@+id/checkschedule_viewpager"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="-50dp"
+        android:background="@color/yellow" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:text="@string/shownav_text" />
+    </LinearLayout>
 </LinearLayout>

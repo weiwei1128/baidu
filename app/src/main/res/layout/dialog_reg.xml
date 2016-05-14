@@ -47,7 +47,8 @@
                 android:id="@+id/reg_account"
                 android:hint="@string/accountInput_text"
                 android:textSize="16dp"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:singleLine="true" />
         </LinearLayout>
 
         <LinearLayout
@@ -74,7 +75,9 @@
                 android:id="@+id/reg_password"
                 android:hint="@string/passwordInput_text"
                 android:textColor="@color/black"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:singleLine="true"
+                android:inputType="textPassword" />
         </LinearLayout>
 
         <LinearLayout
@@ -101,7 +104,8 @@
                 android:id="@+id/reg_name"
                 android:hint="@string/nameInput_text"
                 android:textSize="16dp"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:singleLine="true" />
         </LinearLayout>
 
         <LinearLayout
@@ -128,7 +132,9 @@
                 android:id="@+id/reg_phone"
                 android:hint="@string/telInput_text"
                 android:textSize="16dp"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:singleLine="true"
+                android:inputType="phone" />
         </LinearLayout>
 
         <LinearLayout
@@ -155,7 +161,37 @@
                 android:id="@+id/reg_email"
                 android:hint="@string/emailInput_text"
                 android:textColor="@color/black"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:singleLine="true"
+                android:inputType="textEmailAddress" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@color/white" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Addr_text"
+                android:textSize="16dp"
+                android:textColor="@color/blue"
+                android:background="@drawable/border_rec_blue"
+                android:padding="4dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/reg_addr"
+                android:hint="@string/AddrInput_text"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                android:singleLine="true" />
         </LinearLayout>
 
         <LinearLayout

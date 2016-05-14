@@ -2,8 +2,8 @@ package com.flyingtravel.Fragment;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +13,35 @@ import android.widget.ListView;
 import com.flyingtravel.Activity.MoreItemActivity;
 import com.flyingtravel.Adapter.MoreAdapter;
 import com.flyingtravel.Utility.Functions;
+import com.flyingtravel.Utility.GlobalVariable;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class MoreFragment extends Fragment {
-
+    /*GA*/
+    public static Tracker tracker;
 
     public MoreFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        /**GA**/
+        GlobalVariable globalVariable = (GlobalVariable) getActivity().getApplication();
+        tracker = globalVariable.getDefaultTracker();
+        /**GA**/
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        /**GA**/
+        tracker.setScreenName("更多");
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        /**GA**/
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,6 +55,7 @@ public class MoreFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
                 switch (position) {
+                    //顯示不同的頁面
                     case 0:
                         bundle.putInt("position", 0);
                         break;
@@ -44,30 +63,9 @@ public class MoreFragment extends Fragment {
                         bundle.putInt("position", 1);
                         break;
                 }
-                Functions.go(false,getActivity(),getActivity(),MoreItemActivity.class,bundle);
+                Functions.go(false, getActivity(), getActivity(), MoreItemActivity.class, bundle);
             }
         });
-        /*
-        final ProgressDialog dialog = new ProgressDialog(getActivity());
-        dialog.setMessage("載入中");
-        dialog.show();
-        WebView webView = new WebView(getActivity());
-        String myURL = "http://zhiyou.lin366.com/help.aspx?tid=84";
-
-        WebSettings websettings = webView.getSettings();
-        websettings.setSupportZoom(true);
-        websettings.setBuiltInZoomControls(true);
-        websettings.setJavaScriptEnabled(true);
-
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                dialog.dismiss();
-            }
-        });
-        webView.loadUrl(myURL);
-        */
         return listView;
     }
 

@@ -20,6 +20,9 @@ import com.flyingtravel.HomepageActivity;
 import com.flyingtravel.R;
 import com.flyingtravel.Utility.DataBaseHelper;
 import com.flyingtravel.Utility.Functions;
+import com.flyingtravel.Utility.GlobalVariable;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -44,18 +47,25 @@ public class ServiceActivity extends AppCompatActivity {
     EditText commentEdt;
     LinearLayout sendLayout;
     String name, email, phone;
-    TextView companyText,phoneText,timeText,lineIdText;
+    TextView companyText, phoneText, timeText, lineIdText;
+    /**GA**/
+    public static Tracker tracker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.service_activity);
+        /**GA**/
+        GlobalVariable globalVariable = (GlobalVariable)getApplication();
+        tracker = globalVariable.getDefaultTracker();
+        /**GA**/
         backImg = (LinearLayout) findViewById(R.id.service_backImg);
         commentEdt = (EditText) findViewById(R.id.service_edit);
         sendLayout = (LinearLayout) findViewById(R.id.service_send_layout);
-        companyText = (TextView)findViewById(R.id.service_companyText);
-        phoneText = (TextView)findViewById(R.id.service_phoneText);
-        timeText = (TextView)findViewById(R.id.service_timeText);
-        lineIdText = (TextView)findViewById(R.id.service_lineText);
+        companyText = (TextView) findViewById(R.id.service_companyText);
+        phoneText = (TextView) findViewById(R.id.service_phoneText);
+        timeText = (TextView) findViewById(R.id.service_timeText);
+        lineIdText = (TextView) findViewById(R.id.service_lineText);
 
 
         new getData().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -110,6 +120,15 @@ public class ServiceActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        /**GA**/
+        tracker.setScreenName("即時服務");
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        /**GA**/
+    }
+
     DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
         public void onClick(DialogInterface dialog, int which) {
             switch (which) {
@@ -132,9 +151,10 @@ public class ServiceActivity extends AppCompatActivity {
         return false;
     }
 
-    class getData extends AsyncTask<String,Void,Boolean>{
+    class getData extends AsyncTask<String, Void, Boolean> {
         ProgressDialog dialog = new ProgressDialog(ServiceActivity.this);
-        String company=null,phone=null,time=null,lineId=null;
+        String company = null, phone = null, time = null, lineId = null;
+
         @Override
         protected void onPreExecute() {
             dialog.setMessage(ServiceActivity.this.getResources().getString(R.string.loading_text));
@@ -172,7 +192,7 @@ public class ServiceActivity extends AppCompatActivity {
             } catch (JSONException | NullPointerException e2) {
                 e2.printStackTrace();
             }
-            if(message==null||!message.equals("1"))
+            if (message == null || !message.equals("1"))
                 return false;
             else {
                 try {
@@ -206,17 +226,18 @@ public class ServiceActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean s) {
-            if(dialog.isShowing())
+            if (dialog.isShowing())
                 dialog.dismiss();
-            if(s){
-            companyText.setText(company);
+            if (s) {
+                companyText.setText(company);
                 Log.e("5.3", "company" + company + "phone:" + phone + "time: " + time + "lineID: " + lineId);
                 phoneText.setText(phone);
 
-                lineIdText.setText("LINE ID：" + time);
+                lineIdText.setText("LINE ID：" + lineId);
 //                timeText.append(time);
-                timeText.setText(ServiceActivity.this.getResources().getString(R.string.serviceTime_text)+time);
-            }else Toast.makeText(ServiceActivity.this,ServiceActivity.this.getResources().getString(R.string.wrongData_text),Toast.LENGTH_SHORT).show();
+                timeText.setText(ServiceActivity.this.getResources().getString(R.string.serviceTime_text) + time);
+            } else
+                Toast.makeText(ServiceActivity.this, ServiceActivity.this.getResources().getString(R.string.wrongData_text), Toast.LENGTH_SHORT).show();
             super.onPostExecute(s);
         }
     }
@@ -282,7 +303,7 @@ public class ServiceActivity extends AppCompatActivity {
             commentEdt.setText("");
             if (s == null)
                 s = ServiceActivity.this.getResources().getString(R.string.connecterror_text);
-            Toast.makeText(ServiceActivity.this, ServiceActivity.this.getResources().getString(R.string.reply_text)+"\n" + s, Toast.LENGTH_SHORT).show();
+            Toast.makeText(ServiceActivity.this, ServiceActivity.this.getResources().getString(R.string.reply_text) + "\n" + s, Toast.LENGTH_SHORT).show();
             super.onPostExecute(s);
         }
 

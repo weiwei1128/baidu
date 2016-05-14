@@ -139,18 +139,31 @@
         android:layout_below="@+id/dialog_scrollview"
         android:layout_centerHorizontal="true"
         android:id="@+id/dialog_confirm_layout"
-        android:background="@drawable/click_effect_general"
         android:layout_marginTop="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="50dp"
+            android:id="@+id/dialog_ok"
             android:text="@string/ok_text"
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_weight="1"
             android:textSize="20dp"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:background="@drawable/click_effect_general" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:id="@+id/dialog_cancel"
+            android:text="@string/cancel_text"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:background="@drawable/click_effect_general" />
     </LinearLayout>
 
 </RelativeLayout>

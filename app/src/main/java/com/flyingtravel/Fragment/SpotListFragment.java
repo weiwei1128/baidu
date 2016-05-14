@@ -1,15 +1,12 @@
 package com.flyingtravel.Fragment;
 
-import android.app.SearchManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.MatrixCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -19,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +24,8 @@ import com.flyingtravel.R;
 import com.flyingtravel.Utility.DataBaseHelper;
 import com.flyingtravel.Utility.GetSpotsNSort;
 import com.flyingtravel.Utility.GlobalVariable;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -57,7 +55,7 @@ public class SpotListFragment extends Fragment implements
 
     private Location CurrentLocation;
 
-    int count = 0, pageNo = 1, pages = 0, minus = pageNo-1;
+    int count = 0, pageNo = 1, pages = 0, minus = pageNo - 1;
     private TextView number, lastPage, nextPage;
     private LinearLayout spotList_pageLayout, spotList_textLayout;
 
@@ -70,6 +68,8 @@ public class SpotListFragment extends Fragment implements
     private DataBaseHelper helper;
     private SQLiteDatabase database;
     private GlobalVariable globalVariable;
+    /**GA**/
+    public static Tracker tracker;
 
     public SpotListFragment() {
     }
@@ -91,6 +91,9 @@ public class SpotListFragment extends Fragment implements
             //mParam2 = getArguments().getString(ARG_PARAM2);
         }
         globalVariable = (GlobalVariable) getActivity().getApplicationContext();
+        /**GA**/
+        tracker = globalVariable.getDefaultTracker();
+        /**GA**/
         getActivity().registerReceiver(broadcastReceiver, new IntentFilter(GetSpotsNSort.BROADCAST_ACTION));
 
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
@@ -149,7 +152,6 @@ public class SpotListFragment extends Fragment implements
             }
 
 
-
             //fragment(i) -> i代表第幾頁
             TextView textView = new TextView(getContext());
             textView.setText("/" + pages);
@@ -181,7 +183,7 @@ public class SpotListFragment extends Fragment implements
             if (pageNo == 1)
                 lastPage.setVisibility(View.INVISIBLE);
             else lastPage.setVisibility(View.VISIBLE);
-            minus = pageNo-1;
+            minus = pageNo - 1;
             String get = String.valueOf(position + 1);
             number.setText(get);
         }
@@ -198,6 +200,10 @@ public class SpotListFragment extends Fragment implements
             mGoogleApiClient.connect();
         }
         super.onResume();
+        /**GA**/
+        tracker.setScreenName("周邊景點列表");
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        /**GA**/
     }
 
     @Override
@@ -239,8 +245,7 @@ public class SpotListFragment extends Fragment implements
                 adapter.notifyDataSetChanged();
 
             }
-        }
-        else {
+        } else {
             //you are no longer visible to the user so cleanup whatever you need
             //Log.e("3/23_SpotList", "setUserVisibleHint: not Visible");
             /*if (viewPager != null) {

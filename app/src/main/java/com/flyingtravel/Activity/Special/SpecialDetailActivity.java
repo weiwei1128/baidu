@@ -11,13 +11,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.flyingtravel.R;
+import com.flyingtravel.Utility.DataBaseHelper;
+import com.flyingtravel.Utility.Functions;
+import com.flyingtravel.Utility.GlobalVariable;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.flyingtravel.R;
-import com.flyingtravel.Utility.DataBaseHelper;
-import com.flyingtravel.Utility.Functions;
 
 public class SpecialDetailActivity extends AppCompatActivity {
     ImageView itemImg;
@@ -29,11 +32,31 @@ public class SpecialDetailActivity extends AppCompatActivity {
     DisplayImageOptions options;
     private ImageLoadingListener listener;
     LinearLayout backImg;
+    /**
+     * GA
+     **/
+    public static Tracker tracker;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        /**GA**/
+        if(itemTitle!=null&&itemTitle.getText()!=null) {
+            tracker.setScreenName("即時好康內頁-ID:" +itemTitle.getText().toString());
+            tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        }
+        /**GA**/
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.special_detail_activity);
+        /**GA**/
+        GlobalVariable globalVariable = (GlobalVariable) getApplication();
+        tracker = globalVariable.getDefaultTracker();
+        /**GA**/
+
         Bundle bundle = this.getIntent().getExtras();
         if (bundle != null)
             if (bundle.containsKey("WhichItem")) {

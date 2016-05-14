@@ -46,7 +46,8 @@
                 android:id="@+id/findpwd_accountEdit"
                 android:textSize="16dp"
                 android:textColor="@color/black"
-                android:hint="@string/accountInput_text" />
+                android:hint="@string/accountInput_text"
+                android:singleLine="true" />
         </LinearLayout>
 
         <LinearLayout
@@ -75,7 +76,8 @@
                 android:layout_gravity="center"
                 android:textSize="16dp"
                 android:textColor="@color/black"
-                android:hint="@string/passwordInput_text" />
+                android:hint="@string/passwordInput_text"
+                android:singleLine="true" />
         </LinearLayout>
 
         <LinearLayout

@@ -39,6 +39,12 @@ android {
     useLibrary 'org.apache.http.legacy'
 }
 
+android {
+    //Other stuffs
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+}
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')

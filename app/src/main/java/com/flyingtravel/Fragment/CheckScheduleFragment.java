@@ -10,30 +10,43 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.flyingtravel.Adapter.CheckScheduleNavAdapter;
 import com.flyingtravel.R;
+import com.flyingtravel.ScheduleMapsActivity;
+import com.flyingtravel.Utility.Functions;
+import com.flyingtravel.Utility.GlobalVariable;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 public class CheckScheduleFragment extends Fragment {
-    String[] data = new String[5];
+    String[] data = new String[5], getsummary, getaddress;
     int count = 0;
-    String[] getsummary, getaddress;
     Context context;
     Activity activity;
     ListView gridView;
     CheckScheduleNavAdapter adapter;
+    LinearLayout showLayout;
+    String itemid = null;
+    /*GA*/
+    public static Tracker tracker;
 
     public CheckScheduleFragment() {
         // Required empty public constructor
     }
 
-//05020502!!!!
+    //05020502!!!!
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        Log.e("4.26", "-------onCreate");
+        /**GA**/
+        GlobalVariable globalVariable = (GlobalVariable) getActivity().getApplication();
+        tracker = globalVariable.getDefaultTracker();
+        /**GA**/
         data[0] = getArguments().getString("scheduleday");
         data[1] = getArguments().getString("scheduledate");
         data[2] = getArguments().getString("scheduletime");
@@ -55,6 +68,8 @@ public class CheckScheduleFragment extends Fragment {
 //        Log.d("4.26","-------"+getArguments().getString("schedulesummary"));
         if (getArguments().containsKey("schedulejinwei"))
             data[4] = getArguments().getString("schedulejinwei");
+        if (getArguments().containsKey("scheduleid"))
+            itemid = getArguments().getString("scheduleid");
         context = getActivity().getBaseContext();
         activity = getActivity();
     }
@@ -64,6 +79,27 @@ public class CheckScheduleFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.checkschedule_frament, container, false);
+        showLayout = (LinearLayout) view.findViewById(R.id.checkschedule_allLayout);
+        //瀏覽導航
+        showLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                int putcount = 1;
+                if (count > 0)
+                    putcount = count;
+                bundle.putInt("count", putcount);
+                if (count != 0)
+                    bundle.putStringArray("address", getaddress);
+                else bundle.putStringArray("address", new String[]{data[4]});
+                tracker.send(new HitBuilders.EventBuilder().setCategory("行程查詢-行程模擬-ID:"+itemid)
+//                .setAction("click")
+//                .setLabel("submit")
+                        .build());
+                Functions.go(false, getActivity(), context, ScheduleMapsActivity.class, bundle);
+            }
+        });
+        //瀏覽導航
         gridView = (ListView) view.findViewById(R.id.schedule_gridview);
         if (count != 0)
             adapter = new CheckScheduleNavAdapter(context, count, getsummary, getaddress);
@@ -82,6 +118,12 @@ public class CheckScheduleFragment extends Fragment {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            /***GA**/
+            tracker.send(new HitBuilders.EventBuilder().setCategory("行程查詢-單點導航-ID:" + itemid)
+//                .setAction("click")
+//                .setLabel("submit")
+                    .build());
+            /***GA**/
 //            Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("http://maps.google.com/maps?" + "saddr="
 //                        + "111" + "," + "222" + "&daddr=" + "333" + "," + "444"));
 //                intent.setClassName("com.google.android.apps.maps","com.google.android.maps.MapsActivity");

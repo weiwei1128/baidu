@@ -13,6 +13,9 @@ import com.flyingtravel.Activity.Spot.SpotDetailActivity;
 import com.flyingtravel.Adapter.SpotListAdapter;
 import com.flyingtravel.R;
 import com.flyingtravel.Utility.Functions;
+import com.flyingtravel.Utility.GlobalVariable;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 /**
  * Created by Tinghua on 2016/3/25.
@@ -34,6 +37,8 @@ public class SpotListViewFragment extends Fragment {
 */
     private SpotListAdapter adapter;
     private ListView mlistView;
+    /*GA*/
+    public static Tracker tracker;
 
     public SpotListViewFragment () {
         // Required empty public constructor
@@ -64,6 +69,10 @@ public class SpotListViewFragment extends Fragment {
             mFragmentName = getArguments().getString(FRAGMENT_NAME);
             mPageNo = getArguments().getInt(PAGE_NO);
         }
+        /**GA**/
+        GlobalVariable globalVariable = (GlobalVariable) getActivity().getApplication();
+        tracker = globalVariable.getDefaultTracker();
+        /**GA**/
         //Log.e("3/27_", "SpotListViewFragment. onCreate pageNo" + mPageNo);
     }
 
@@ -88,6 +97,12 @@ public class SpotListViewFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                /***GA**/
+                tracker.send(new HitBuilders.EventBuilder().setCategory("景點查詢-查詢關鍵字:"+newText.toString())
+//                .setAction("click")
+//                .setLabel("submit")
+                        .build());
+                /***GA**/
                 int index = SpotListFragment.viewPager.getCurrentItem();
                 adapter = new SpotListAdapter(getActivity(), (index+1));
                 mlistView.setAdapter(adapter);

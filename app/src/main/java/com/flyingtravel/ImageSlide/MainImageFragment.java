@@ -22,8 +22,13 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
+import com.flyingtravel.Activity.WebviewActivity;
 import com.flyingtravel.R;
 import com.flyingtravel.Utility.DataBaseHelper;
+import com.flyingtravel.Utility.Functions;
+import com.flyingtravel.Utility.GlobalVariable;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -56,12 +61,18 @@ public class MainImageFragment extends Fragment {
     FragmentActivity activity;
     RelativeLayout putProgressLayout;
     ProgressBar progressBar;
-
+    int previousEvent = 999;
+    /*GA*/
+    public static Tracker tracker;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = getActivity();
+        /**GA**/
+        GlobalVariable globalVariable = (GlobalVariable) getActivity().getApplication();
+        tracker = globalVariable.getDefaultTracker();
+        /**GA**/
 
     }
 
@@ -90,6 +101,8 @@ public class MainImageFragment extends Fragment {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 v.getParent().requestDisallowInterceptTouchEvent(true);
+//                Log.e("5.8", "event:" + event.getAction());
+
                 switch (event.getAction()) {
 
                     case MotionEvent.ACTION_CANCEL:
@@ -103,6 +116,21 @@ public class MainImageFragment extends Fragment {
                             runnable(products.size());
                             handler.postDelayed(animateViewPager,
                                     ANIM_VIEWPAGER_DELAY_USER_VIEW);
+//                            Log.e("5.8", previousEvent + "event: item URL:" + products.get(mViewPager.getCurrentItem()).getLinkUrl());
+                            Bundle bundle = new Bundle();
+                            bundle.putString("NewsLink", products.get(mViewPager.getCurrentItem()).getLinkUrl());
+                            if (previousEvent == 0) {
+                                /***GA**/
+                                tracker.send(new HitBuilders.EventBuilder().setCategory("Banner-ID:" + products.get(mViewPager.getCurrentItem()).getId())
+//                .setAction("click")
+//                .setLabel("submit")
+                                        .build());
+                                /***GA**/
+                                Functions.go(false, MainImageFragment.this.getActivity(), MainImageFragment.this.getContext(),
+                                        WebviewActivity.class,
+                                        bundle
+                                );
+                            }
                         }
                         break;
 
@@ -114,6 +142,7 @@ public class MainImageFragment extends Fragment {
                         }
                         break;
                 }
+                previousEvent = event.getAction();
                 return false;
             }
         });
@@ -236,50 +265,21 @@ public class MainImageFragment extends Fragment {
             //0307
             DataBaseHelper helper = DataBaseHelper.getmInstance(context);
             SQLiteDatabase database = helper.getWritableDatabase();
-            Cursor cursor = database.query("banner", new String[]{"img_url"}, null, null, null, null, null);
+            Cursor cursor = database.query("banner", new String[]{"img_url", "link", "bannerid"}, null, null, null, null, null);
             if (cursor != null) {
                 while (cursor.moveToNext()) {
 //                    Log.i("3.25", "Getting Banner~" + cursor.getString(0));
                     product = new Product();
-                    product.setId(434);
+                    if (cursor.getString(2) != null)
+                        product.setId(Integer.parseInt(cursor.getString(2)));
+                    else product.setId(999);
                     product.setName("Pattern - Fractal Wallpaper");
                     product.setImageUrl(cursor.getString(0));
+                    product.setLinkUrl(cursor.getString(1));
                     productsAdd.add(product);
                 }
                 cursor.close();
             }
-/*
-            product = new Product();
-            product.setId(434);
-            product.setName("Pattern - Fractal Wallpaper");
-            product.setImageUrl("http://www.hchcc.gov.tw/ch/temp/flower2014/images/index_F_01.jpg");
-            productsAdd.add(product);
-
-
-            product = new Product();
-            product.setId(431);
-            product.setName("Mickey Mouse");
-            product.setImageUrl("http://www.hchcc.gov.tw/ch/temp/flower2014/images/index_F_01.jpg");
-            productsAdd.add(product);
-
-            product = new Product();
-            product.setId(424);
-            product.setName("Pattern - Wallpaper");
-            product.setImageUrl("http://www.hchcc.gov.tw/ch/temp/flower2014/images/index_F_01.jpg");
-            productsAdd.add(product);
-
-            product = new Product();
-            product.setId(426);
-            product.setName("Batman");
-            product.setImageUrl("http://www.hchcc.gov.tw/ch/temp/flower2014/images/index_F_01.jpg");
-            productsAdd.add(product);
-
-            product = new Product();
-            product.setId(419);
-            product.setName("Pattern - Music");
-            product.setImageUrl("http://www.hchcc.gov.tw/ch/temp/flower2014/images/index_F_01.jpg");
-            productsAdd.add(product);
-            */
             return productsAdd;
         }
 

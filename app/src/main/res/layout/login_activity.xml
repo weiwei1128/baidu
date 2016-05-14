@@ -86,7 +86,9 @@
         android:layout_centerHorizontal="true"
         android:padding="10dp"
         android:background="@drawable/border_rec_red"
-        android:hint="@string/passwordInput_text" />
+        android:hint="@string/passwordInput_text"
+        android:singleLine="true"
+        android:inputType="textPassword" />
 
     <TextView
         android:layout_width="match_parent"
@@ -112,7 +114,8 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/border_rec_blue"
         android:padding="10dp"
-        android:hint="@string/accountInput_text" />
+        android:hint="@string/accountInput_text"
+        android:singleLine="true" />
 
     <TextView
         android:layout_width="wrap_content"

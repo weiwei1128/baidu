@@ -45,7 +45,10 @@ import android.widget.Toast;
 
 import com.flyingtravel.Utility.DataBaseHelper;
 import com.flyingtravel.Utility.Functions;
+import com.flyingtravel.Utility.GlobalVariable;
 import com.flyingtravel.Utility.TrackRouteService;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -126,6 +129,7 @@ public class RecordTrackFragment extends Fragment implements
     private ImageView dialog_img, write, camera, leave;
     private TextView record_start_text, record_spot_text;
     private TextView dialog_header_text, title_textView, title_confirmTextView, content_textView;
+    private TextView dialog_ok_text, dialog_cancel_text;
     private EditText title_editText, content_editText;
 
     private Integer RoutesCounter = 1;
@@ -147,6 +151,8 @@ public class RecordTrackFragment extends Fragment implements
     public static ProgressDialog mProgressDialog;
 
     //private OnFragmentInteractionListener mListener;
+    /**GA**/
+    public static Tracker tracker;
 
     public RecordTrackFragment() {
         // Required empty public constructor
@@ -176,7 +182,10 @@ public class RecordTrackFragment extends Fragment implements
             mFragmentName = getArguments().getString(FRAGMENT_NAME);
             //mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
+        /**GA**/
+        GlobalVariable globalVariable = (GlobalVariable)getActivity().getApplication();
+        tracker = globalVariable.getDefaultTracker();
+        /**GA**/
         //globalVariable = (GlobalVariable) getActivity().getApplicationContext();
         getActivity().registerReceiver(broadcastReceiver, new IntentFilter(TrackRouteService.BROADCAST_ACTION));
         getActivity().registerReceiver(broadcastReceiver_timer, new IntentFilter(TrackRouteService.BROADCAST_ACTION_TIMER));
@@ -247,6 +256,8 @@ public class RecordTrackFragment extends Fragment implements
         content_editText = (EditText) spotDialog.findViewById(R.id.content_editText);
 
         dialog_confirm_layout = (LinearLayout) spotDialog.findViewById(R.id.dialog_confirm_layout);
+        dialog_ok_text = (TextView) spotDialog.findViewById(R.id.dialog_ok);
+        dialog_cancel_text = (TextView) spotDialog.findViewById(R.id.dialog_cancel);
         write = (ImageView) spotDialog.findViewById(R.id.dialog_write_img);
         camera = (ImageView) spotDialog.findViewById(R.id.dialog_camera_img);
         leave = (ImageView) spotDialog.findViewById(R.id.dialog_leave_img);
@@ -286,9 +297,16 @@ public class RecordTrackFragment extends Fragment implements
                 title_confirmTextView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (title_editText.getText().equals("")) {
+                        if (title_editText.getText().toString().equals("")) {
                             Toast.makeText(getActivity(), getContext().getResources().getString(R.string.emptyInput_text), Toast.LENGTH_SHORT).show();
                         } else {
+                            if (Functions.isMyServiceRunning(getActivity(), TrackRouteService.class)) {
+                                Intent intent_Trace = new Intent(TRACK_TO_SERVICE);
+                                intent_Trace.putExtra("record_status", 0);
+                                intent_Trace.putExtra("track_title", title_editText.getText().toString());
+                                getActivity().sendBroadcast(intent_Trace);
+                            }
+
                             mProgressDialog.setMessage(getContext().getResources().getString(R.string.handling_text));
                             mProgressDialog.setCancelable(false);
                             mProgressDialog.show();
@@ -304,12 +322,6 @@ public class RecordTrackFragment extends Fragment implements
                             record_start_img.setImageResource(R.drawable.ic_play_light);
                             record_status = 0;
 
-                            if (Functions.isMyServiceRunning(getActivity(), TrackRouteService.class)) {
-                                Intent intent_Trace = new Intent(TRACK_TO_SERVICE);
-                                intent_Trace.putExtra("record_status", 0);
-                                intent_Trace.putExtra("track_title", title_editText.getText().toString());
-                                getActivity().sendBroadcast(intent_Trace);
-                            }
                             spotDialog.dismiss();
                         }
                     }
@@ -436,13 +448,17 @@ public class RecordTrackFragment extends Fragment implements
                 dialog_choose_layout.setVisibility(View.INVISIBLE);
 
                 dialog_confirm_layout.setVisibility(View.VISIBLE);
-                dialog_confirm_layout.setOnClickListener(new View.OnClickListener() {
+                dialog_ok_text.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         // save content to DB
-                        if (content_editText.getText().equals("")) {
+                        if (content_editText.getText().toString().equals("")) {
                             Toast.makeText(getActivity(), getContext().getResources().getString(R.string.emptyInput_text), Toast.LENGTH_SHORT).show();
                         } else {
+                            tracker.send(new HitBuilders.EventBuilder().setCategory("旅程紀錄筆記  (紀錄中)")
+//                .setAction("click")
+//                .setLabel("submit")
+                                    .build());
                             DataBaseHelper helper = DataBaseHelper.getmInstance(getActivity());
                             SQLiteDatabase db = helper.getReadableDatabase();
                             Cursor memo_cursor = db.query("travelMemo", new String[]{"memo_routesCounter", "memo_trackNo",
@@ -454,7 +470,7 @@ public class RecordTrackFragment extends Fragment implements
                                 cv.put("memo_trackNo", Track_no);
                                 cv.put("memo_content", content_editText.getText().toString());
                                 if (CurrentLatlng != null) {
-                                    cv.put("memo_latlng", CurrentLocation.getLongitude()+","+CurrentLocation.getLatitude());
+                                    cv.put("memo_latlng", CurrentLocation.getLongitude() + "," + CurrentLocation.getLatitude());
                                 }
                                 SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
                                 Date date = new Date();
@@ -483,12 +499,48 @@ public class RecordTrackFragment extends Fragment implements
 
                     }
                 });
+
+                dialog_cancel_text.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (content_editText.getText().toString().equals("")) {
+                            dialog_scrollview.setVisibility(View.INVISIBLE);
+                            RelativeLayout.LayoutParams otelParams1 = new RelativeLayout.LayoutParams(
+                                    ViewGroup.LayoutParams.MATCH_PARENT, 0);
+                            otelParams1.addRule(RelativeLayout.BELOW, R.id.dialog_header_text);
+                            dialog_scrollview.setLayoutParams(otelParams1);
+
+                            dialog_relativeLayout.setVisibility(View.INVISIBLE);
+                            content_layout.setVisibility(View.INVISIBLE);
+
+                            dialog_choose_layout.setVisibility(View.VISIBLE);
+
+                            dialog_confirm_layout.setVisibility(View.INVISIBLE);
+                        } else {
+                            // 創建退出對話框
+                            AlertDialog isExit = new AlertDialog.Builder(getContext()).create();
+                            // 設置對話框標題
+                            isExit.setTitle(getContext().getResources().getString(R.string.systemMessage_text));
+                            // 設置對話框消息
+                            isExit.setMessage(getContext().getResources().getString(R.string.CancelSend_text));
+                            // 添加選擇按鈕並注冊監聽
+                            isExit.setButton(getContext().getResources().getString(R.string.ok_text), listener);
+                            isExit.setButton2(getContext().getResources().getString(R.string.cancel_text), listener);
+                            // 顯示對話框
+                            isExit.show();
+                        }
+                    }
+                });
             }
         });
 
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tracker.send(new HitBuilders.EventBuilder().setCategory("旅程紀錄拍照  (紀錄中)")
+//                .setAction("click")
+//                .setLabel("submit")
+                        .build());
 //                Log.e("3/23_", "CAMERA");
                 //getContext().getResources().getString(R.string.uploaded_text)
                 final CharSequence[] items = {getContext().getResources().getString(R.string.camera_text),
@@ -511,15 +563,15 @@ public class RecordTrackFragment extends Fragment implements
                             Intent intent_camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                             intent_camera.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                             startActivityForResult(intent_camera, REQUEST_CAMERA);
-                            } else if (items[item].equals(getContext().getResources().getString(R.string.album_text))) {
-                                Intent intent_photo = new Intent(Intent.ACTION_GET_CONTENT);
-                                intent_photo.setType("image/*");
-                                startActivityForResult(Intent.createChooser(intent_photo, getContext().getResources().getString(R.string.chooseFile_text)),
-                                        SELECT_FILE);
-                            } else if (items[item].equals(getContext().getResources().getString(R.string.cancel_text))) {
-                                dialog.dismiss();
+                        } else if (items[item].equals(getContext().getResources().getString(R.string.album_text))) {
+                            Intent intent_photo = new Intent(Intent.ACTION_GET_CONTENT);
+                            intent_photo.setType("image/*");
+                            startActivityForResult(Intent.createChooser(intent_photo, getContext().getResources().getString(R.string.chooseFile_text)),
+                                    SELECT_FILE);
+                        } else if (items[item].equals(getContext().getResources().getString(R.string.cancel_text))) {
+                            dialog.dismiss();
                         }
-                        }
+                    }
                 });
                 builder.show();
             }
@@ -554,6 +606,10 @@ public class RecordTrackFragment extends Fragment implements
             MarkerIcon = decodeBitmapFromResource(getResources(), R.drawable.location3, 10, 18);
         }
         super.onResume();
+        /**GA**/
+        tracker.setScreenName("旅程紀錄地圖");
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        /**GA**/
     }
 
     @Override
@@ -660,7 +716,7 @@ public class RecordTrackFragment extends Fragment implements
         DataBaseHelper helper = DataBaseHelper.getmInstance(getActivity());
         SQLiteDatabase database = helper.getWritableDatabase();
         Cursor trackRoute_cursor = database.query("trackRoute",
-                new String[]{"routesCounter","track_no", "track_lat", "track_lng",
+                new String[]{"routesCounter", "track_no", "track_lat", "track_lng",
                         "track_start", "track_title", "track_totaltime", "track_completetime"},
                 null, null, null, null, null);
         if (trackRoute_cursor != null) {
@@ -701,7 +757,7 @@ public class RecordTrackFragment extends Fragment implements
         DataBaseHelper helper = DataBaseHelper.getmInstance(getActivity());
         SQLiteDatabase database = helper.getWritableDatabase();
         Cursor trackRoute_cursor = database.query("trackRoute",
-                new String[]{"routesCounter","track_no", "track_lat", "track_lng",
+                new String[]{"routesCounter", "track_no", "track_lat", "track_lng",
                         "track_start", "track_title", "track_totaltime", "track_completetime"},
                 null, null, null, null, null);
         if (trackRoute_cursor != null) {
@@ -769,10 +825,10 @@ public class RecordTrackFragment extends Fragment implements
                         // 暫停紀錄
                         record_status = 2;
                         Integer min = Integer.valueOf(temp_totaltime.substring(0, temp_totaltime.indexOf(":", 0)));
-                        Integer sec = Integer.valueOf(temp_totaltime.substring(temp_totaltime.indexOf(":", 0)+1, temp_totaltime.length()));
+                        Integer sec = Integer.valueOf(temp_totaltime.substring(temp_totaltime.indexOf(":", 0) + 1, temp_totaltime.length()));
                         //Log.d("4/1_", "min:" + temp_totaltime.substring(0, temp_totaltime.indexOf(":", 0)));
                         //Log.d("4/1_", "sec:" + temp_totaltime.substring(temp_totaltime.indexOf(":", 0)+1, temp_totaltime.length()));
-                        tempSpent = Long.valueOf((min*60+sec)*1000);
+                        tempSpent = Long.valueOf((min * 60 + sec) * 1000);
                         record_start_layout.setBackgroundColor(Color.parseColor("#FFFFFF"));
                         record_start_text.setTextColor(Color.parseColor("#555555"));
                         record_start_text.setText(getContext().getResources().getString(R.string.startRecord_text));
@@ -817,7 +873,7 @@ public class RecordTrackFragment extends Fragment implements
                 e.printStackTrace();
             }
             String orientString = exif.getAttribute(ExifInterface.TAG_ORIENTATION);
-            int orientation = orientString != null ? Integer.parseInt(orientString):ExifInterface.ORIENTATION_NORMAL;
+            int orientation = orientString != null ? Integer.parseInt(orientString) : ExifInterface.ORIENTATION_NORMAL;
 
 //            Log.e("4/1_", "exifOrientation: " + orientation);
 
@@ -840,13 +896,44 @@ public class RecordTrackFragment extends Fragment implements
             dialog_scrollview.setLayoutParams(otelParams);
 
             dialog_relativeLayout.setVisibility(View.VISIBLE);
-
             dialog_img.setVisibility(View.VISIBLE);
 
             dialog_choose_layout.setVisibility(View.INVISIBLE);
 
             dialog_confirm_layout.setVisibility(View.VISIBLE);
-            dialog_confirm_layout.setOnClickListener(ok);
+            dialog_ok_text.setOnClickListener(ok);
+            dialog_cancel_text.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (memo_img == null) {
+                                dialog_scrollview.setVisibility(View.INVISIBLE);
+                                RelativeLayout.LayoutParams otelParams1 = new RelativeLayout.LayoutParams(
+                                        ViewGroup.LayoutParams.MATCH_PARENT, 0);
+                                otelParams1.addRule(RelativeLayout.BELOW, R.id.dialog_header_text);
+                                dialog_scrollview.setLayoutParams(otelParams1);
+
+                                dialog_relativeLayout.setVisibility(View.INVISIBLE);
+                                dialog_img.setVisibility(View.INVISIBLE);
+
+                                dialog_choose_layout.setVisibility(View.VISIBLE);
+
+                                dialog_confirm_layout.setVisibility(View.INVISIBLE);
+                            } else {
+                                // 創建退出對話框
+                                AlertDialog isExit = new AlertDialog.Builder(getContext()).create();
+                                // 設置對話框標題
+                                isExit.setTitle(getContext().getResources().getString(R.string.systemMessage_text));
+                                // 設置對話框消息
+                                isExit.setMessage(getContext().getResources().getString(R.string.CancelSend_text));
+                                // 添加選擇按鈕並注冊監聽
+                                isExit.setButton(getContext().getResources().getString(R.string.ok_text), listener);
+                                isExit.setButton2(getContext().getResources().getString(R.string.cancel_text), listener);
+                                // 顯示對話框
+                                isExit.show();
+                            }
+                        }
+                    });
         }
 
         super.onActivityResult(requestCode, resultCode, data);
@@ -877,11 +964,10 @@ public class RecordTrackFragment extends Fragment implements
                                     RecordActivity.time_text.setText("0" + ((spent / 1000) / 60) + ":0" + ((spent / 1000) % 60));
                                 else
                                     RecordActivity.time_text.setText("0" + ((spent / 1000) / 60) + ":" + ((spent / 1000) % 60));
+                            else if (((spent / 1000) % 60) < 10)
+                                RecordActivity.time_text.setText(((spent / 1000) / 60) + ":0" + ((spent / 1000) % 60));
                             else
-                                if (((spent / 1000) % 60) < 10)
-                                    RecordActivity.time_text.setText(((spent / 1000) / 60) + ":0" + ((spent / 1000) % 60));
-                                else
-                                    RecordActivity.time_text.setText(((spent / 1000) / 60) + ":" + ((spent / 1000) % 60));
+                                RecordActivity.time_text.setText(((spent / 1000) / 60) + ":" + ((spent / 1000) % 60));
                         } else {
                             if (((spent / 1000) % 60) < 10)
                                 RecordActivity.time_text.setText("00:0" + ((spent / 1000) % 60));
@@ -972,7 +1058,7 @@ public class RecordTrackFragment extends Fragment implements
                             cv.put("memo_img", data);
                         }
                         if (CurrentLatlng != null) {
-                            cv.put("memo_latlng", CurrentLocation.getLongitude()+","+CurrentLocation.getLatitude());
+                            cv.put("memo_latlng", CurrentLocation.getLongitude() + "," + CurrentLocation.getLatitude());
                         }
                         SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
                         Date date = new Date();
@@ -996,6 +1082,7 @@ public class RecordTrackFragment extends Fragment implements
                 if (spotDialog.isShowing()) {
                     if (memo_img != null) {
                         dialog_img.setImageBitmap(null);
+                        System.gc();
                     }
                     spotDialog.dismiss();
                 }
@@ -1008,6 +1095,35 @@ public class RecordTrackFragment extends Fragment implements
             super.onPostExecute(s);
         }
     }
+
+    DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+                case AlertDialog.BUTTON_POSITIVE:// "確認"
+                    content_editText.setText("");
+                    dialog_img.setImageBitmap(null);
+                    System.gc();
+                    dialog_scrollview.setVisibility(View.INVISIBLE);
+                    RelativeLayout.LayoutParams otelParams1 = new RelativeLayout.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT, 0);
+                    otelParams1.addRule(RelativeLayout.BELOW, R.id.dialog_header_text);
+                    dialog_scrollview.setLayoutParams(otelParams1);
+
+                    dialog_relativeLayout.setVisibility(View.INVISIBLE);
+                    dialog_img.setVisibility(View.INVISIBLE);
+                    content_layout.setVisibility(View.INVISIBLE);
+
+                    dialog_choose_layout.setVisibility(View.VISIBLE);
+
+                    dialog_confirm_layout.setVisibility(View.INVISIBLE);
+                    break;
+                case AlertDialog.BUTTON_NEGATIVE:// "取消"第二個按鈕取消對話框
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     public static Bitmap rotateImage(Bitmap source, float angle) {
         Bitmap retVal;
@@ -1063,7 +1179,7 @@ public class RecordTrackFragment extends Fragment implements
                 }
 
                 final String selection = "_id=?";
-                final String[] selectionArgs = new String[] {
+                final String[] selectionArgs = new String[]{
                         split[1]
                 };
 
@@ -1086,9 +1202,9 @@ public class RecordTrackFragment extends Fragment implements
      * Get the value of the data column for this Uri. This is useful for
      * MediaStore Uris, and other file-based ContentProviders.
      *
-     * @param context The context.
-     * @param uri The Uri to query.
-     * @param selection (Optional) Filter used in the query.
+     * @param context       The context.
+     * @param uri           The Uri to query.
+     * @param selection     (Optional) Filter used in the query.
      * @param selectionArgs (Optional) Selection arguments used in the query.
      * @return The value of the _data column, which is typically a file path.
      */

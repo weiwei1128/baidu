@@ -23,6 +23,9 @@ import com.flyingtravel.HomepageActivity;
 import com.flyingtravel.R;
 import com.flyingtravel.Utility.DataBaseHelper;
 import com.flyingtravel.Utility.Functions;
+import com.flyingtravel.Utility.GlobalVariable;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,12 +42,17 @@ public class BuyActivity extends AppCompatActivity {
     int UpdateItem=0;
     TextView number, lastPage, nextPage;
     //http://www.anbon.tw/travel/good_cover.png
-
+    /**GA**/
+    public static Tracker tracker;
 
     @Override
     protected void onResume() {
         getPages();
         super.onResume();
+        /**GA**/
+        tracker.setScreenName("伴手禮");
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        /**GA**/
     }
 
     @Override
@@ -52,9 +60,14 @@ public class BuyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.buy_activity);
 
+        /**GA**/
+        GlobalVariable globalVariable = (GlobalVariable) getApplication();
+        tracker = globalVariable.getDefaultTracker();
+        /**GA**/
         UI();
         setPageNo();
         getPages();
+
 
         //fragment(i) -> i代表第幾頁
         LinearLayout layout = (LinearLayout) findViewById(R.id.buy_textLayout);

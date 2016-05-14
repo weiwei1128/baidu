@@ -51,8 +51,6 @@ public class TrackRouteService extends Service {
 
     @Override
     public void onCreate() {
-        //Log.d("3/10_", "TrackRouteService: onCreate");
-        //Log.i(TAG, "onCreate");
 
         registerReceiver(broadcastReceiver, new IntentFilter(RecordTrackFragment.TRACK_TO_SERVICE));
         registerReceiver(broadcastReceiver_timer, new IntentFilter(RecordTrackFragment.TIMER_TO_SERVICE));
@@ -110,8 +108,8 @@ public class TrackRouteService extends Service {
 
             final Double Latitude = mLastLocation.getLatitude();
             final Double Longitude = mLastLocation.getLongitude();
-            //Log.d("3/10_", "Latitude " + Latitude);
-            //Log.d("3/10_", "Longitude " + Longitude);
+//            Log.d("3/20_", "Latitude " + Latitude);
+//            Log.d("3/20_", "Longitude " + Longitude);
 
             if (!isPause) {
                 // 廣播畫軌跡
@@ -153,8 +151,8 @@ public class TrackRouteService extends Service {
                                     + " status " + record_status);
                             RecordActivity.time_text.setText("");
                             RecordDiaryFragment.mAdapter.notifyDataSetChanged();
-                            //Log.e("3/27_", "TrackService. notifyDataSetChanged");
-                            //Log.e("3/10_", "Call stop TrackRouteService");
+//                            Log.e("3/27_", "TrackService. notifyDataSetChanged");
+//                            Log.e("3/20_", "Call stop TrackRouteService");
 
                             if (RecordTrackFragment.mProgressDialog.isShowing()) {
                                 RecordTrackFragment.mProgressDialog.dismiss();
@@ -196,7 +194,6 @@ public class TrackRouteService extends Service {
 
     @Override
     public void onDestroy() {
-        //Log.d("3/10_", "TrackRouteService: onDestroy");
         handler.removeCallbacks(count);
 
         if (broadcastReceiver != null)
@@ -217,7 +214,6 @@ public class TrackRouteService extends Service {
     }
 
     private void initializeLocationManager() {
-        //Log.i(TAG, "initializeLocationManager");
         if (mLocationManager == null) {
             mLocationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
         }
@@ -267,7 +263,7 @@ public class TrackRouteService extends Service {
                 cv.put("track_start", 1);
                 cv.put("track_totaltime", RecordActivity.time_text.getText().toString());
                 long result = database.insert("trackRoute", null, cv);
-                Log.d("3/10_軌跡紀錄", result + " = DB INSERT RC:" + RoutesCounter
+                Log.d("3/20_軌跡紀錄", result + " = DB INSERT RC:" + RoutesCounter
                         + " no:" + Track_no + " 座標 " + Latitude + "," + Longitude
                         + " status " + record_status);
             } else if (record_status == 2) {
@@ -293,8 +289,8 @@ public class TrackRouteService extends Service {
                         + " status " + record_status);
                 RecordActivity.time_text.setText("");
                 RecordDiaryFragment.mAdapter.notifyDataSetChanged();
-                //Log.e("3/27_", "RecordTrackFragment. notifyDataSetChanged");
-                //Log.e("3/10_", "Call stop TrackRouteService");
+//                Log.e("3/27_", "RecordTrackFragment. notifyDataSetChanged");
+//                Log.e("3/20_", "Call stop TrackRouteService");
 
                 if (RecordTrackFragment.mProgressDialog.isShowing()) {
                     RecordTrackFragment.mProgressDialog.dismiss();
@@ -315,10 +311,12 @@ public class TrackRouteService extends Service {
                 if (record_status == 1) {
                     start_time = intent.getLongExtra("start", 0);
                     tempSpent = intent.getLongExtra("spent", 0);
+                    RoutesCounter = intent.getIntExtra("routesCounter", RoutesCounter);
+                    Track_no = intent.getIntExtra("track_no", Track_no);
                     isPause = false;
                     handler.postDelayed(count, 1000);
-                    Log.d("3/18_Service", "BroadcastReceiver: start_time "
-                            + start_time + " tempSpent " + tempSpent);
+//                    Log.d("3/28_Service", "BroadcastReceiver: start_time "
+//                            + start_time + " tempSpent " + tempSpent);
                 }
             }
         }

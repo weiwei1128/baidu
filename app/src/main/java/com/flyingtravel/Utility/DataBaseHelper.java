@@ -11,8 +11,10 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DataBaseHelper extends SQLiteOpenHelper {
     private static DataBaseHelper mInstance = null;
-    private static final int VERSION = 3;
-    // version 2: news 新增一個column //TODO 尚未測試!
+    private static final int VERSION = 5;
+    // version 2: news 新增一個column
+    // version 4: banner 新增一個column
+    // version 5: banner 新增一個column
     private static final String DATABASE_NAME = "Travel.db";
     private Context mcontext;
 
@@ -166,12 +168,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         //最新消息
         String DATABASE_CREATE_TABLE_NEWS = "create table news("
                 + "_ID INTEGER PRIMARY KEY," + "title TEXT,"
-                +"link TEXT"
+                + "link TEXT"
                 + ");";
         db.execSQL(DATABASE_CREATE_TABLE_NEWS);
 
         String DATABASE_CREATE_TABLE_BANNER = "create table banner("
-                + "_ID INTEGER PRIMARY KEY," + "img_url TEXT"
+                + "_ID INTEGER PRIMARY KEY," + "img_url TEXT,"
+                + "link TEXT,"//0508 新增一個column
+                + "bannerid TEXT"//0508 新增一個column
                 + ");";
         db.execSQL(DATABASE_CREATE_TABLE_BANNER);
 
@@ -192,17 +196,29 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         System.out.println("database CREATE");
     }
+
     private static final String DATABASE_ALTER_TEAM_1 = "ALTER TABLE "
             + "news" + " ADD COLUMN " + "link" + " TEXT;";
+
+    private static final String DATABASE_ALTER_TEAM_2 = "ALTER TABLE "
+            + "banner" + " ADD COLUMN " + "link" + " TEXT;";
+    private static final String DATABASE_ALTER_TEAM_3 = "ALTER TABLE "
+            + "banner" + " ADD COLUMN " + "bannerid" + " TEXT;";
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         /** TODO 正式版已修改!!
-         * [0425] [DATABASE_ALTER_TEAM_1] [新增一個table]
+         * [0425] [DATABASE_ALTER_TEAM_1] [新增一個column]
+         * [0508] [DATABASE_ALTER_TEAM_2] [新增一個column]
          * **/
-        if(oldVersion<2)
-            db.execSQL(DATABASE_ALTER_TEAM_1);
-
+        if(oldVersion<5) {
+            if (oldVersion < 4) {
+                if (oldVersion < 2)
+                    db.execSQL(DATABASE_ALTER_TEAM_1);
+                db.execSQL(DATABASE_ALTER_TEAM_2);
+            }
+            db.execSQL(DATABASE_ALTER_TEAM_3);
+        }
     }
 
 }

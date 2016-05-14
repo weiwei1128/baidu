@@ -12,6 +12,7 @@ public class Product implements Parcelable {
     private int id;
     private String name;
     private String imageUrl;
+    private String linkUrl;
 
     public Product() {
         super();
@@ -22,6 +23,7 @@ public class Product implements Parcelable {
         this.id = in.readInt();
         this.name = in.readString();
         this.imageUrl = in.readString();
+        this.linkUrl = in.readString();
     }
 
     @Override
@@ -65,9 +67,16 @@ public class Product implements Parcelable {
     public String getImageUrl() {
         return imageUrl;
     }
+    public String getLinkUrl() {
+        return linkUrl;
+    }
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public void setLinkUrl(String linkUrl) {
+        this.linkUrl = linkUrl;
     }
 
     public static Parcelable.Creator<Product> getCreator() {

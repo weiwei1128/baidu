@@ -5,10 +5,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.flyingtravel.Activity.Spot.SpotData;
@@ -35,14 +37,13 @@ public class LoadApiService extends Service {
 //        Log.d("3/23_", "LoadApiService onCreate");
         context = getApplicationContext();
         globalVariable = (GlobalVariable) context.getApplicationContext();
-        registerReceiver(broadcastReceiver_TPE, new IntentFilter(TPESpotAPIFetcher.BROADCAST_ACTION));
+        registerReceiver(broadcastReceiver_TPE, new IntentFilter(TpeApi.BROADCAST_ACTION));
         registerReceiver(broadcastReceiver_TW, new IntentFilter(TwApi.BROADCAST_ACTION));
         super.onCreate();
     }
 
     @Override
     public void onDestroy() {
-        Log.d("3/23_", "LoadApiService onDestroy");
         if (broadcastReceiver_TPE != null)
             unregisterReceiver(broadcastReceiver_TPE);
         if (broadcastReceiver_TW != null)
@@ -52,42 +53,36 @@ public class LoadApiService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-//        Log.d("3/23_", "LoadApiService onStartCommand");
 
-        //利用 executeOnExecutor 確切執行非同步作業
-        DataBaseHelper helper = DataBaseHelper.getmInstance(context);
-        SQLiteDatabase database = helper.getWritableDatabase();
-        Cursor spotDataRaw_cursor = database.query("spotDataRaw", new String[]{"spotName", "spotAdd",
-                        "spotLat", "spotLng", "picture1", "picture2", "picture3",
-                        "openTime", "ticketInfo", "infoDetail"},
-                null, null, null, null, null);
-        if (spotDataRaw_cursor != null) {
-            //TPESpotAPIFetcher tpeApi = new TPESpotAPIFetcher(context);
-            TpeApi tpeApi = new TpeApi(context);
-            TwApi twApi = new TwApi(context);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        Boolean DownloadTpeApi = sharedPreferences.getBoolean("DownloadTpeApi", false);
+        Boolean DownloadTwApi = sharedPreferences.getBoolean("DownloadTwApi", false);
+//        Log.e("3/23_", "DownloadTpeApi: "+DownloadTpeApi);
+//        Log.e("3/23_", "DownloadTwApi: "+DownloadTwApi);
+        TpeApi tpeApi = new TpeApi(context);
+        TwApi twApi = new TwApi(context);
 
-            if (spotDataRaw_cursor.getCount() == 0) {
-                // 到景點API抓景點資訊
-//                Log.e("3/23_", "*****Download API*****");
-                if(!(tpeApi.getStatus() == AsyncTask.Status.RUNNING)) {
-                    tpeApi.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }
-                if(!(twApi.getStatus() == AsyncTask.Status.RUNNING)) {
-                    twApi.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }
-                //new TPESpotAPIFetcher(context).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            } else if (spotDataRaw_cursor.getCount() > 300 && spotDataRaw_cursor.getCount() < 4600) {
-                if(!(twApi.getStatus() == AsyncTask.Status.RUNNING)) {
-                    twApi.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }
-            } else if (spotDataRaw_cursor.getCount() > 4300 && spotDataRaw_cursor.getCount() < 4600) {
-                if(!(tpeApi.getStatus() == AsyncTask.Status.RUNNING)) {
-                    tpeApi.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                }
-            } else if (spotDataRaw_cursor.getCount() > 4600) {
-                if (globalVariable.SpotDataRaw.size() < 4600) {
+        if (!DownloadTpeApi) {
+            if(!(tpeApi.getStatus() == AsyncTask.Status.RUNNING)) {
+                tpeApi.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        }
+
+        if (!DownloadTwApi) {
+            if(!(twApi.getStatus() == AsyncTask.Status.RUNNING)) {
+                twApi.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        }
+
+        if (DownloadTpeApi && DownloadTwApi) {
+            DataBaseHelper helper = DataBaseHelper.getmInstance(context);
+            SQLiteDatabase database = helper.getWritableDatabase();
+            Cursor spotDataRaw_cursor = database.query("spotDataRaw", new String[]{"spotName", "spotAdd",
+                            "spotLat", "spotLng", "picture1", "picture2", "picture3",
+                            "openTime", "ticketInfo", "infoDetail"}, null, null, null, null, null);
+            if (spotDataRaw_cursor != null && spotDataRaw_cursor.getCount() > 0) {
+                if (globalVariable.SpotDataRaw.size() < spotDataRaw_cursor.getCount()) {
                     globalVariable.SpotDataRaw.clear();
-//                    Log.e("3/23_", "API load to GlobalVariable");
                     while (spotDataRaw_cursor.moveToNext()) {
                         String Name = spotDataRaw_cursor.getString(0);
                         String Add = spotDataRaw_cursor.getString(1);
@@ -100,21 +95,21 @@ public class LoadApiService extends Service {
                         String TicketInfo = spotDataRaw_cursor.getString(8);
                         String InfoDetail = spotDataRaw_cursor.getString(9);
                         globalVariable.SpotDataRaw.add(new SpotData(Name, Latitude, Longitude, Add,
-                                Picture1, Picture2, Picture3, OpenTime,TicketInfo, InfoDetail));
+                                Picture1, Picture2, Picture3, OpenTime, TicketInfo, InfoDetail));
                     }
-//                    Log.e("3/23_", "API count: " + globalVariable.SpotDataRaw.size());
-                    globalVariable.isAPILoaded = true;
-                    if (globalVariable.isAPILoaded) {
-//                        Log.e("3/23_", "API is Loaded Broadcast");
-                        Intent APILoaded = new Intent(BROADCAST_ACTION);
-                        APILoaded.putExtra("isAPILoaded", true);
-                        sendBroadcast(APILoaded);
-//                        Log.e("3/23_", "***Call StopLoadApiService***");
-                        stopSelf();
-                    }
+                    spotDataRaw_cursor.close();
+                }
+//                Log.e("3/23_", "API count: " + globalVariable.SpotDataRaw.size());
+                globalVariable.isAPILoaded = true;
+                if (globalVariable.isAPILoaded) {
+//                    Log.e("3/23_", "API is Loaded Broadcast");
+                    Intent APILoaded = new Intent(BROADCAST_ACTION);
+                    APILoaded.putExtra("isAPILoaded", true);
+                    sendBroadcast(APILoaded);
+//                    Log.e("3/23_", "***Call StopLoadApiService***");
+                    stopSelf();
                 }
             }
-            spotDataRaw_cursor.close();
         }
         return START_STICKY;
     }

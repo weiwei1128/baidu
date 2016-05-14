@@ -2,10 +2,12 @@ package com.flyingtravel.Utility;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.JsonToken;
 import android.util.Log;
 
@@ -252,6 +254,12 @@ public class TpeApi extends AsyncTask<String, Void, ArrayList<SpotData>> {
 
     protected void onPostExecute(ArrayList<SpotData> s) {
 //        Log.e("3/23_TpeApi", "DONE");
+        if (s.size() != 0) {
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mcontext);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("DownloadTpeApi", true);
+            editor.apply();
+        }
         super.onPostExecute(s);
     }
 }

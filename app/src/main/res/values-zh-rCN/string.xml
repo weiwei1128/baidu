@@ -133,4 +133,13 @@
     <string name="title_activity_check_schedule_activity_new">CheckScheduleActivityNew</string>
     <string name="title_activity_webview">WebviewActivity</string>
     <string name="navi_text">导  航</string>
+    <string name="shownav_text">浏览旅程</string>
+    <string name="startplay_text">开始</string>
+    <string name="stopplay_text">停止</string>
+    <string name="title_activity_schedule_maps">Map</string>
+    <string name="Addr_text">地址</string>
+    <string name="AddrInput_text">请输入地址</string>
+    <string name="addok_text">加入成功</string>
+    <string name="satisfy_text">满意度</string>
+    <string name="CancelSend_text">确定要取消上传吗</string>
 </resources>

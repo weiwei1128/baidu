@@ -1,8 +1,10 @@
 package com.flyingtravel.Activity.Spot;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -33,7 +36,7 @@ public class SpotDetailActivity extends AppCompatActivity {
 
     Integer mPosition;
     TextView SpotName, SpotOpenTime, SpotAddress, SpotTicketInfo, SpotDetail;
-    ImageView SpotImg,BackImg;
+    ImageView SpotImg, BackImg, NaviImg;
 
     private Double Latitude;
     private Double Longitude;
@@ -117,6 +120,7 @@ public class SpotDetailActivity extends AppCompatActivity {
                 Functions.go(true, SpotDetailActivity.this, SpotDetailActivity.this, SpotActivity.class, bundle);
             }
         });
+        NaviImg = (ImageView) findViewById(R.id.spotdetail_naviImg);
 
         Bundle bundle = this.getIntent().getExtras();
         if (bundle.containsKey("WhichItem")) {
@@ -184,6 +188,20 @@ public class SpotDetailActivity extends AppCompatActivity {
 
         if(SpotImg!=null)
             SpotImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+        NaviImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (globalVariable.SpotDataSorted.get(mPosition).getAdd() != "") {
+                    Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                            Uri.parse("google.navigation:q=" + globalVariable.SpotDataSorted.get(mPosition).getAdd()));
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(SpotDetailActivity.this,  SpotDetailActivity.this.getResources()
+                            .getString(R.string.wrongData_text), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 

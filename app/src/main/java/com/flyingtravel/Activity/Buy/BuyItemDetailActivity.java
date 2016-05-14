@@ -3,16 +3,20 @@ package com.flyingtravel.Activity.Buy;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +29,9 @@ import android.widget.TextView;
 import com.flyingtravel.R;
 import com.flyingtravel.Utility.DataBaseHelper;
 import com.flyingtravel.Utility.Functions;
+import com.flyingtravel.Utility.GlobalVariable;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -41,6 +48,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
@@ -59,9 +69,11 @@ public class BuyItemDetailActivity extends AppCompatActivity {
     SQLiteDatabase database;
     String itemID;
     String[][] cartItem;
-    LinearLayout addLayout, BackImg;
-
-
+    LinearLayout addLayout, BackImg, shareLayout;
+    /**
+     * GA
+     **/
+    public static Tracker tracker;
 
     //按下返回鍵
     @Override
@@ -69,14 +81,28 @@ public class BuyItemDetailActivity extends AppCompatActivity {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             Functions.go(true, BuyItemDetailActivity.this, BuyItemDetailActivity.this, BuyActivity.class, null);
         }
-
         return false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (itemID != null) {
+            /**GA**/
+            tracker.setScreenName("伴手禮內頁-ID:" + itemID);
+            tracker.send(new HitBuilders.ScreenViewBuilder().build());
+            /**GA**/
+        }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.buyitem_detail_activity);
+        /**GA**/
+        GlobalVariable globalVariable = (GlobalVariable) getApplication();
+        tracker = globalVariable.getDefaultTracker();
+        /**GA**/
 
         //record which item is clicked
         Bundle bundle = this.getIntent().getExtras();
@@ -118,7 +144,7 @@ public class BuyItemDetailActivity extends AppCompatActivity {
     }
 
 
-    void getInfo(){
+    void getInfo() {
         //===各個item的資料=02_24==//
 //        Log.e("4.25","!!!!!getIngo!!!!!");
         helper = DataBaseHelper.getmInstance(BuyItemDetailActivity.this);
@@ -153,7 +179,7 @@ public class BuyItemDetailActivity extends AppCompatActivity {
             goods_cursor.close();
     }
 
-    void UI(){
+    void UI() {
         ItemName = (TextView) findViewById(R.id.buyitemName_Text);
         ItemDetail = (TextView) findViewById(R.id.buyitemDetail_text);
         ItemHeader = (TextView) findViewById(R.id.buyItemHeader);
@@ -169,6 +195,50 @@ public class BuyItemDetailActivity extends AppCompatActivity {
         AddImg.setVisibility(View.INVISIBLE);
         addLayout = (LinearLayout) findViewById(R.id.buyitem_addLayout);
         addLayout.setVisibility(View.INVISIBLE);
+        shareLayout = (LinearLayout) findViewById(R.id.buyitem_share);
+        shareLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+                //drawable -> bitmap
+                Bitmap icon = ((BitmapDrawable)ItemImg.getDrawable()).getBitmap();
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                icon.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+//                InputStream inputStream = getResources().openRawResource(R.drawable.icon_512);
+                byte buf[] = new byte[1024];
+                int len = 0;
+
+                String path = Environment.getExternalStorageDirectory() + File.separator + "temporary_file.jpg";
+                File f = new File(path);
+                try {
+                    FileOutputStream fo = new FileOutputStream(f);
+                    fo.write(bytes.toByteArray());
+//                    while ((len = inputStream.read(buf)) > 0)
+//                        fo.write(buf);
+                    fo.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+//                    Log.d("4.18", "error" + e.toString());
+                }
+
+                //setting share information
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, BuyItemDetailActivity.this.getResources().getString(R.string.title_text));
+//                sharingIntent.putExtra(Intent.EXTRA_TEMPLATE, "testtt");
+//                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getContext().getResources().getString(R.string.title_text));
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "http://zhiyou.lin366.com/shop/show.aspx?id="+itemID);
+                sharingIntent.putExtra(Intent.EXTRA_TITLE,BuyItemDetailActivity.this.getResources().getString(R.string.title_text));
+                sharingIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(f));
+                sharingIntent.setType("image/jpeg");
+                sharingIntent.setType("*/*");
+//                Log.d("4.18", "path:" + path + " lens: " + len+" bytes"+bytes.size());
+//                File file = new File(path);
+//                Log.d("4.18", String.valueOf(file.exists()));
+
+
+//                image/jpeg
+                startActivity(Intent.createChooser(sharingIntent, BuyItemDetailActivity.this.getResources().getString(R.string.shareto_text)));
+            }
+        });
     }
 
     void setupAddDialog() {
@@ -264,9 +334,10 @@ public class BuyItemDetailActivity extends AppCompatActivity {
                     * Integer.valueOf(numberText[i].getText().toString()) + "");
             totalprice[0] += Integer.valueOf(totalText[i].getText().toString());
             totalPrice.setText(totalprice[0] + "");
-            if(itemImg.startsWith("http://"))
-            loader.displayImage(itemImg, Img[i], options, listener);
-            else loader.displayImage("http://zhiyou.lin366.com/" + itemImg, Img[i], options, listener);
+            if (itemImg.startsWith("http://"))
+                loader.displayImage(itemImg, Img[i], options, listener);
+            else
+                loader.displayImage("http://zhiyou.lin366.com/" + itemImg, Img[i], options, listener);
 
             final int finalI = i;
             addButton[i].setOnClickListener(new View.OnClickListener() {
@@ -386,8 +457,7 @@ public class BuyItemDetailActivity extends AppCompatActivity {
 //                    Log.e("3.24", List.toString());
                     editor.apply();
                 }
-//                if (sharedPreferences.contains(finalItemId))
-//                    Log.e("3.24", "contain!!!" + sharedPreferences.getStringSet(finalItemId, null));
+                Functions.toast(BuyItemDetailActivity.this, BuyItemDetailActivity.this.getString(R.string.addok_text));
                 if (BuyAdd.isShowing())
                     BuyAdd.cancel();
             }
@@ -468,7 +538,12 @@ public class BuyItemDetailActivity extends AppCompatActivity {
             } catch (IOException | NullPointerException e) {
                 e.printStackTrace();
             }
-            String htmlString = Html.fromHtml(getString).toString();
+            String htmlString = null;
+            try {
+                htmlString = Html.fromHtml(getString).toString();
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
             String state = null;
             try {
                 state = new JSONObject(htmlString.substring(htmlString.indexOf("{"), htmlString.lastIndexOf("}") + 1)).getString("states");

@@ -18,9 +18,9 @@ import android.widget.Toast;
 
 import com.flyingtravel.Adapter.SpotFragmentPagerAdapter;
 import com.flyingtravel.Fragment.SpotListFragment;
-import com.flyingtravel.SpotMapFragment;
 import com.flyingtravel.HomepageActivity;
 import com.flyingtravel.R;
+import com.flyingtravel.SpotMapFragment;
 import com.flyingtravel.Utility.Functions;
 
 import java.util.ArrayList;
@@ -35,6 +35,7 @@ public class SpotActivity extends FragmentActivity {
     List<android.support.v4.app.Fragment> fragments = new ArrayList<>();
 
     final int REQUEST_LOCATION = 2;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,9 +97,9 @@ public class SpotActivity extends FragmentActivity {
         super.onDestroy();
     }
 
-    private void initViewPager(){
+    private void initViewPager() {
         List<Fragment> fragments = getFragments();
-        SpotFragmentPagerAdapter adapter = new SpotFragmentPagerAdapter(getSupportFragmentManager(), fragments,SpotActivity.this);
+        SpotFragmentPagerAdapter adapter = new SpotFragmentPagerAdapter(getSupportFragmentManager(), fragments, SpotActivity.this);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(adapter);
@@ -130,7 +131,7 @@ public class SpotActivity extends FragmentActivity {
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == REQUEST_LOCATION) {
-            if(grantResults.length == 1
+            if (grantResults.length == 1
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // We can now safely use the API we requested access to
 

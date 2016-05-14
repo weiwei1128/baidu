@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +17,9 @@ import android.widget.Toast;
 import com.flyingtravel.R;
 import com.flyingtravel.Utility.DataBaseHelper;
 import com.flyingtravel.Utility.Functions;
+import com.flyingtravel.Utility.GlobalVariable;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -40,16 +42,31 @@ public class ShopRecordItemActivity extends AppCompatActivity {
             ship_message, money_item, money_ship, money_total;
     LinearLayout carLayout, backImg;
     Context context = ShopRecordItemActivity.this;
-
     LayoutInflater inflater;
+    /*GA*/
+    public static Tracker tracker;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        /**GA**/
+        if(OrderId!=null) {
+            tracker.setScreenName("訂單內頁-ID:"+OrderId);
+            tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        }
+        /**GA**/
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shoprecord_item_activity);
+        /**GA**/
+        GlobalVariable globalVariable = (GlobalVariable) getApplication();
+        tracker = globalVariable.getDefaultTracker();
+        /**GA**/
         setupUI();
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         Bundle bundle = this.getIntent().getExtras();
         if (bundle.containsKey("WhichItem")) {
             OrderId = bundle.getString("WhichItem");

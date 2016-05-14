@@ -25,6 +25,8 @@ import com.flyingtravel.Utility.DataBaseHelper;
 import com.flyingtravel.Utility.GetSpotsNSort;
 import com.flyingtravel.Utility.GlobalVariable;
 import com.flyingtravel.Utility.LoadApiService;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -67,8 +69,9 @@ public class SpotMapFragment extends Fragment implements
 
     private Location CurrentLocation;
     private Marker CurrentMarker;
-
     private Bitmap MarkerIcon;
+    /**GA**/
+    public static Tracker tracker;
 
     public SpotMapFragment() {
         // Required empty public constructor
@@ -91,7 +94,11 @@ public class SpotMapFragment extends Fragment implements
             //mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        globalVariable = (GlobalVariable) getActivity().getApplicationContext();
+
+        globalVariable = (GlobalVariable) getActivity().getApplication();
+        /**GA**/
+        tracker = globalVariable.getDefaultTracker();
+        /**GA**/
         getActivity().registerReceiver(broadcastReceiver, new IntentFilter(LoadApiService.BROADCAST_ACTION));
         getActivity().registerReceiver(broadcastReceiver_SpotSort, new IntentFilter(GetSpotsNSort.BROADCAST_ACTION));
 
@@ -170,7 +177,7 @@ public class SpotMapFragment extends Fragment implements
             MarkerIcon = decodeBitmapFromResource(getResources(), R.drawable.location3, 10, 18);
             if (!globalVariable.MarkerOptionsArray.isEmpty()) {
                 int MarkerCount = globalVariable.MarkerOptionsArray.size();
-                for (int i = 0; i < MarkerCount/12; i++) {
+                for (int i = 0; i < MarkerCount / 12; i++) {
                     mMap.addMarker(globalVariable.MarkerOptionsArray.get(i)
                             .icon(BitmapDescriptorFactory.fromBitmap(MarkerIcon)));
                 }
@@ -178,20 +185,24 @@ public class SpotMapFragment extends Fragment implements
         } else {
             if (!globalVariable.MarkerOptionsArray.isEmpty()) {
                 int MarkerCount = globalVariable.MarkerOptionsArray.size();
-                for (int i = 0; i < MarkerCount/12; i++) {
+                for (int i = 0; i < MarkerCount / 12; i++) {
                     mMap.addMarker(globalVariable.MarkerOptionsArray.get(i)
                             .icon(BitmapDescriptorFactory.fromBitmap(MarkerIcon)));
                 }
             }
         }
         super.onResume();
+        /**GA**/
+        tracker.setScreenName("周邊景點地圖");
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        /**GA**/
     }
 
     @Override
     public void onPause() {
         mapView.onPause();
         if (mGoogleApiClient.isConnected()) {
-            LocationServices.FusedLocationApi.removeLocationUpdates (mGoogleApiClient, this);
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
         super.onPause();
     }
@@ -242,14 +253,13 @@ public class SpotMapFragment extends Fragment implements
                 MarkerIcon = decodeBitmapFromResource(getResources(), R.drawable.location3, 10, 18);
                 if (!globalVariable.MarkerOptionsArray.isEmpty()) {
                     int MarkerCount = globalVariable.MarkerOptionsArray.size();
-                    for (int i = 0; i < MarkerCount/12; i++) {
+                    for (int i = 0; i < MarkerCount / 12; i++) {
                         mMap.addMarker(globalVariable.MarkerOptionsArray.get(i)
                                 .icon(BitmapDescriptorFactory.fromBitmap(MarkerIcon)));
                     }
                 }
             }
-        }
-        else {
+        } else {
             //you are no longer visible to the user so cleanup whatever you need
             //Log.e("3/23_SpotMap", "setUserVisibleHint: not Visible");
             if (MarkerIcon != null) {
@@ -446,7 +456,7 @@ public class SpotMapFragment extends Fragment implements
                     String Name = globalVariable.SpotDataSorted.get(i).getName();
                     Double Latitude = globalVariable.SpotDataSorted.get(i).getLatitude();
                     Double Longitude = globalVariable.SpotDataSorted.get(i).getLongitude();
-                    LatLng latLng = new LatLng(Latitude,Longitude);
+                    LatLng latLng = new LatLng(Latitude, Longitude);
                     String OpenTime = globalVariable.SpotDataSorted.get(i).getOpenTime();
                     MarkerOptions markerOpt = new MarkerOptions();
                     markerOpt.position(latLng).title(Name).snippet(OpenTime);
@@ -457,7 +467,7 @@ public class SpotMapFragment extends Fragment implements
                 DataBaseHelper helper = DataBaseHelper.getmInstance(getActivity());
                 SQLiteDatabase database = helper.getWritableDatabase();
                 Cursor spotDataRaw_cursor = database.query("spotDataRaw", new String[]{"spotName", "spotAdd",
-                                "spotLat", "spotLng", "picture1", "picture2","picture3",
+                                "spotLat", "spotLng", "picture1", "picture2", "picture3",
                                 "openTime", "ticketInfo", "infoDetail"},
                         null, null, null, null, null);
                 if (spotDataRaw_cursor != null) {
@@ -465,7 +475,7 @@ public class SpotMapFragment extends Fragment implements
                         String Name = spotDataRaw_cursor.getString(1);
                         Double Latitude = spotDataRaw_cursor.getDouble(3);
                         Double Longitude = spotDataRaw_cursor.getDouble(4);
-                        LatLng latLng = new LatLng(Latitude,Longitude);
+                        LatLng latLng = new LatLng(Latitude, Longitude);
                         String OpenTime = spotDataRaw_cursor.getString(8);
                         MarkerOptions markerOpt = new MarkerOptions();
                         markerOpt.position(latLng).title(Name).snippet(OpenTime);
@@ -483,7 +493,7 @@ public class SpotMapFragment extends Fragment implements
                 globalVariable.MarkerOptionsArray = markerOptionsArray;
             }
             int MarkerCount = globalVariable.MarkerOptionsArray.size();
-            for (int i = 0; i < MarkerCount/12; i++) {
+            for (int i = 0; i < MarkerCount / 12; i++) {
                 mMap.addMarker(globalVariable.MarkerOptionsArray.get(i)
                         .icon(BitmapDescriptorFactory.fromBitmap(MarkerIcon)));
             }
