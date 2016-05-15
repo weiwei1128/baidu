@@ -2,10 +2,10 @@ package com.flyingtravel.Utility;
 
 import android.app.Application;
 
+import com.baidu.mapapi.map.MarkerOptions;
 import com.flyingtravel.Activity.Spot.SpotData;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 

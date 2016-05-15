@@ -235,7 +235,7 @@ public class SpotListFragment extends Fragment implements
     public void setUserVisibleHint(boolean isVisibleToUser) {
         if (isVisibleToUser) {
             //you are visible to user now - so set whatever you need
-            //Log.e("3/23_SpotList", "setUserVisibleHint: Visible");
+            Log.e("5/15_SpotList", "setUserVisibleHint: Visible");
             if (viewPager != null && viewPager.getAdapter() == null && pages != 0) {
                 if (adapter == null)
                     adapter = new SpotListFragmentViewPagerAdapter(getChildFragmentManager(), pages);
@@ -343,7 +343,7 @@ public class SpotListFragment extends Fragment implements
         public void onReceive(Context context, Intent intent) {
             //Update Your UI here..
             if (intent != null) {
-                Boolean isSpotSorted = intent.getBooleanExtra("isSpoted", false);
+                Boolean isSpotSorted = intent.getBooleanExtra("isSorted", false);
                 if (isSpotSorted) {
 //                    Log.e("3/23_景點排序完畢", "Receive Broadcast");
 

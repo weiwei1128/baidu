@@ -41,7 +41,7 @@ public class GetSpotsNSort extends AsyncTask<Void, Void, ArrayList<SpotData>> {
 
     @Override
     protected ArrayList<SpotData> doInBackground(Void... param) {
-        Log.e("3/23_", "=========GetSpotsNSort======doInBackground");
+//        Log.e("5/15_", "=========GetSpotsNSort======doInBackground");
         ArrayList<SpotData> mSpotData = new ArrayList<SpotData>();
         if (globalVariable.isAPILoaded) {
             Integer SpotCount = globalVariable.SpotDataRaw.size();
@@ -100,7 +100,7 @@ public class GetSpotsNSort extends AsyncTask<Void, Void, ArrayList<SpotData>> {
         globalVariable.SpotDataSorted = mSpotData;
         if (!globalVariable.SpotDataSorted.isEmpty()) {
             Intent intent = new Intent(BROADCAST_ACTION);
-            intent.putExtra("isSpoted", true);
+            intent.putExtra("isSorted", true);
             mcontext.sendBroadcast(intent);
         }
 
